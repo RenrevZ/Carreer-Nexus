@@ -1,9 +1,9 @@
 <template>
-    
 <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-1xl lg:text-4xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
   Job Solution</span> A Employment Detective.
 </h1>
 
+<p>Empowering people, building communities, securing futures: Employment for all!</p>
 <div class="m-auto flex justify-center items-center p-5">
   <form class="lg:w-1/2">   
     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -17,9 +17,9 @@
   </form>
 </div>
 
-
-
- <Jobs :jobs="jobs" />
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+    <Jobs :jobs="jobs" />
+  </div>
 <!-- == END OF DOCUMENT -->
 </template>
 
@@ -27,10 +27,10 @@
 import { ref } from '@vue/reactivity'
 import { projectFirestore } from '../firebase/config'
 import Jobs from '../components/Jobs'
-import Navbar from '../components/Navbar'
+
 
 export default { 
-  components: { Jobs, Navbar},
+  components: { Jobs},
   setup(){
     const jobs = ref([])
     const error = ref([])
@@ -41,8 +41,6 @@ export default {
          jobs.value = response.docs.map(doc => {
           return {...doc.data(),id : doc.id}
          })
-
-         console.log(jobs.value)
       }
       catch(err){
         error.value = err.message
