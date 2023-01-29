@@ -1,12 +1,23 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="h-screen m-auto">
+    <router-view></router-view>
+  </div>
 </template>
 
+
+<script>
+  export default{
+
+  }
+</script>
+
+
 <style>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -26,5 +37,10 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color:white;
+  opacity: 1;
 }
 </style>
