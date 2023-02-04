@@ -24,29 +24,14 @@
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
-import { projectFirestore } from '../firebase/config'
-import Jobs from '../components/Jobs'
 
+import Jobs from '../components/Jobs'
+import getData from '../composables/getData'
 
 export default { 
   components: { Jobs},
   setup(){
-    const jobs = ref([])
-    const error = ref([])
-    const loadData = async () => {
-      try{
-         const response = await projectFirestore.collection('Jobs').get()
-         
-         jobs.value = response.docs.map(doc => {
-          return {...doc.data(),id : doc.id}
-         })
-      }
-      catch(err){
-        error.value = err.message
-        console.log(error.value) 
-      }
-    }
+      const { error, jobs , loadData} = getData()
 
     loadData()
     return { jobs , loadData}
