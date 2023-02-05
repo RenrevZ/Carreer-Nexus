@@ -5,7 +5,7 @@
 
 <p>Empowering people, building communities, securing futures: Employment for all!</p>
 <div class="m-auto flex justify-center items-center p-5">
-  <form class="lg:w-1/2">   
+  <form class="lg:w-1/2 w-full">   
     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div class="relative">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -20,21 +20,26 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
     <Jobs :jobs="jobs" />
   </div>
+
+  <SignIn :showLoginModal="showModal" @closemodal="Modaltoggle"/>
 <!-- == END OF DOCUMENT -->
 </template>
 
 <script>
-
+import { ref } from '@vue/reactivity'
 import Jobs from '../components/Jobs'
 import getData from '../composables/getData'
+import SignIn from '../components/SignIn'
+import  toggleModal from '../composables/toggleModal'
 
 export default { 
-  components: { Jobs},
+  components: { Jobs , SignIn},
   setup(){
       const { error, jobs , loadData} = getData()
+      const {Modaltoggle,showModal} = toggleModal()
 
     loadData()
-    return { jobs , loadData}
+    return { jobs , loadData ,Modaltoggle,showModal}
   }
 }
 </script> 
