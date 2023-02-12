@@ -17,11 +17,15 @@
   </form>
 </div>
 
+  <!-- ==== JOBS DATA === -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
     <Jobs :jobs="jobs" />
   </div>
 
-  <SignIn :showLoginModal="showModal" @closemodal="Modaltoggle"/>
+  <!-- ==== SIGN IN MODAL ==== -->
+  <SignIn :showSignupModal="showSigupModal" @closemodal="SignupModaltoggle"/>
+
+  <Login :showLoginModal="showLoginModal" @closemodal="LoginModaltoggle"/>
 <!-- == END OF DOCUMENT -->
 </template>
 
@@ -30,16 +34,24 @@ import { ref } from '@vue/reactivity'
 import Jobs from '../components/Jobs'
 import getData from '../composables/getData'
 import SignIn from '../components/SignIn'
+import Login from '../components/Login'
 import  toggleModal from '../composables/toggleModal'
 
 export default { 
-  components: { Jobs , SignIn},
+  components: { Jobs, SignIn, Login},
+  props:['showSignupModal','showLoginModal'],
   setup(){
       const { error, jobs , loadData} = getData()
-      const {Modaltoggle,showModal} = toggleModal()
-
+      const {SignupModaltoggle,showSigupModal,LoginModaltoggle,showLoginModal} = toggleModal()
+    
     loadData()
-    return { jobs , loadData ,Modaltoggle,showModal}
+    return { jobs,
+            loadData,
+            SignupModaltoggle,
+            showSigupModal,
+            LoginModaltoggle,
+            showLoginModal
+        }
   }
 }
 </script> 

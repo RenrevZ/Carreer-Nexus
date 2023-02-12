@@ -1,17 +1,21 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
+import 'firebase/compat/auth'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDCxWhl-MlPHGeDW5ThNqPhF0-UiIf_B1s",
-    authDomain: "codealongwninja.firebaseapp.com",
-    projectId: "codealongwninja",
-    storageBucket: "codealongwninja.appspot.com",
-    messagingSenderId: "756479764115",
-    appId: "1:756479764115:web:42c3955a568140c23c4f66"
+    apiKey: "AIzaSyC2509UEp94OHa5CIgjZU_lvIXGlVuFuQg",
+    authDomain: "job-solution-92956.firebaseapp.com",
+    projectId: "job-solution-92956",
+    storageBucket: "job-solution-92956.appspot.com",
+    messagingSenderId: "246354967912",
+    appId: "1:246354967912:web:4dc0f65e7de647d3a16add",
+    measurementId: "G-QQY2KJ226F"
 };
 
 firebase.initializeApp(firebaseConfig)
 
+const projectAuth = firebase.auth()
 const projectFirestore = firebase.firestore()
+const timestamp = firebase.firestore.FieldValue.serverTimestamp
 
-export { projectFirestore }
+export { projectAuth,projectFirestore,timestamp }

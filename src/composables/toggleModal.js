@@ -1,14 +1,23 @@
 import { ref } from "vue";
 
-let showModal = ref(false)
+let showLoginModal = ref(false)
+let showSigupModal = ref(false)
 
 
-const Modaltoggle = () => {
-    showModal.value = !showModal.value
+const LoginModaltoggle = () => {
+    showLoginModal.value = !showLoginModal.value
 }
 
+const SignupModaltoggle = () => {
+    showSigupModal.value = !showSigupModal.value
+}
 const toggleModal = () => {
-    return {Modaltoggle,showModal}
+    return {
+        LoginModaltoggle,
+        SignupModaltoggle,
+        showLoginModal,
+        showSigupModal
+    }
 }
 
 export default toggleModal

@@ -10,7 +10,7 @@
          </h2>
          <div class=" p-2 border-0 border-b border-gray-200 mb-4 ">
              <p>
-                {{ jobs.Description }}
+                {{ jobs.JobDescription }}
             </p>
          </div>
 
