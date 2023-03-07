@@ -14,7 +14,8 @@
             </p>
          </div>
 
-         <button class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+         <button class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+         @click="apply">
                 Apply now
          </button>
     </div>
@@ -35,14 +36,21 @@
 
 <script>
 import getSingleData from '../composables/getSingleData'
+import getUser from '@/composables/getUser'
 export default {
     props: ['id'],
-    setup(props){
+    setup(props,{emit}){
         const { error, jobs , loadData} = getSingleData(props.id)
-
+        const { user } = getUser()
+        
+        console.log(user)
+        const apply = () => {
+            emit('apply')
+        }
+        
         loadData()
 
-        return { error,jobs}
+        return { error,jobs,apply}
     }   
 }
 </script>
