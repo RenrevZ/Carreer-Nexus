@@ -35,7 +35,7 @@ import Jobs from '../components/Jobs'
 import getData from '../composables/getData'
 import SignIn from '../components/SignIn'
 import Login from '../components/Login'
-import  toggleModal from '../composables/toggleModal'
+import toggleModal from '../composables/toggleModal'
 
 export default { 
   components: { Jobs, SignIn, Login},

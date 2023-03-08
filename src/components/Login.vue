@@ -2,6 +2,7 @@
     <transition name="slide-down">
       <!-- Main modal -->
     <div v-if="showLoginModal" id="authentication-modal" tabindex="-1" aria-hidden="true" class="bg-gray-900 bg-opacity-75 fixed top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full md:flex h-screen items-center justify-center">
+        
         <div class="relative w-full h-full max-w-md md:h-auto">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -10,6 +11,7 @@
                     <span class="sr-only">Close modal</span>
                 </button>
                 <div class="px-6 py-6 lg:px-8">
+                    <small class="text-lg text-rose-600" v-if="showLoginfirst">You have to login first</small>
                     <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Login</h3>
                     <form class="space-y-6" action="#">
                         <div>
@@ -42,7 +44,7 @@
                         </div>
                         <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login to your account</button>
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                            Not registered? <a href="#" class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
+                            Not registered? <a class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
                         </div>
                     </form>
                 </div>
@@ -52,9 +54,9 @@
     </transition>
     </template>
     
-    <script>
-    export default {
-        props: ['showLoginModal'],
+<script>
+export default {
+        props: ['showLoginModal','showLoginfirst'],
         emits: ['closemodal'],
         setup(props,{emit}){
     
@@ -64,13 +66,14 @@
     
             return { CloseEmit }
         }
-    }
-    </script>
-    <style scope>
-    .slide-down-enter-active, .slide-down-leave-active {
-      transition: all .3s ease;
-    }
-    .slide-down-enter, .slide-down-leave-to {
-      transform: translateY(-100%);
-    }
-    </style>
+}
+</script>
+
+<style scope>
+.slide-down-enter-active, .slide-down-leave-active {
+    transition: all .3s ease;
+}
+.slide-down-enter, .slide-down-leave-to {
+    transform: translateY(-100%);
+}
+</style>

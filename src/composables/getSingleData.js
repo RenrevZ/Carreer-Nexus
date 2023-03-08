@@ -18,6 +18,8 @@ const getSingleData =  (id) => {
     }
     }
 
+    loadData()
+
     return { error, jobs , loadData}
 }
 
