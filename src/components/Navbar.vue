@@ -1,6 +1,6 @@
 <template>
   
-<nav class="bg-white shadow p-2 mb-3">
+<nav class="bg-white shadow p-2 mb-3 sticky top-0">
     <div class="flex justify-around items-center">
         <div class="left">
             <i class="fa-solid fa-lightbulb text-teal-500 text-2xl"></i>
