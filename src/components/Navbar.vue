@@ -16,7 +16,7 @@
                 </li>
 
                 <li class="mr-5">
-                    <router-link :to="{ name : 'Another'}">
+                    <router-link :to="{ name : 'JobList'}">
                         <i class="fa-solid fa-briefcase"></i> Jobs
                     </router-link>
                 </li>
@@ -38,7 +38,8 @@
             </button>
         </div>
 
-        <div v-else>
+        <div v-else class="flex justify-around items-center">
+            <h3 class="p-2">Hi there, {{ user.displayName }}</h3>
             <button @click="Logout" type="button" class="text-white shadow bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Logout
             </button>

@@ -1,10 +1,11 @@
 <template>
-    <h1>GUMANA naman</h1>
+    <Search/>
 </template>
 
 <script>
+import Search from '@/components/Search'
 export default {
-
+    components: {Search}
 }
 </script>
 

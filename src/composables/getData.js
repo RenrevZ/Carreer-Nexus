@@ -9,7 +9,7 @@ const getData =  () => {
         const response = await projectFirestore.collection('Jobs').get()
         
         jobs.value = response.docs.map(doc => {
-        return {...doc.data(),id : doc.id}
+            return {...doc.data(),id : doc.id}
         })
     }
     catch(err){
