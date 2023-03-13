@@ -18,6 +18,8 @@ const getData =  () => {
     }
     }
 
+    loadData()
+
     return { error, jobs , loadData}
 }
 

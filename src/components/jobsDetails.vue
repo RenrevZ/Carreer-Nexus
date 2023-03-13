@@ -17,7 +17,6 @@
                     <li> <i class="fa-solid fa-briefcase text-teal-600 text-lg p-1"></i>{{ jobs.Experience }}</li>
                     <li><i class="fa-solid fa-map-location-dot text-teal-600 text-lg p-1"></i> {{ jobs.Location }}</li>
                     <li><i class="fa-solid fa-business-time text-teal-600 text-lg p-1"></i>{{ jobs.Timeline }}</li>
-                    <li><i class="fa-regular fa-file-lines text-teal-600 text-lg p-1"></i>{{ jobs.timestamp }}</li>
                 </ul>
               </div>
 
@@ -48,12 +47,6 @@
                         <i class="fa-solid fa-note-sticky"></i> Job Details Overview
                     </h5>
                </div>
-
-               <!-- <div class="center">
-                    <h2 class="text-lg font-extrabold tracking-tight text-slate-500 dark:text-white">
-                        {{ jobs.Company }}
-                    </h2>
-               </div> -->
              
                <div class="right">
                  <button class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
