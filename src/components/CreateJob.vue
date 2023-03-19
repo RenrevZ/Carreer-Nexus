@@ -1,6 +1,6 @@
 <template>
 <div class="md:grid grid-cols-2 gap-2">
-<div class="max-w-screen-xl p-6 mx-10 bg-white border border-teal-400 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div class="max-w-screen-xl max-h-fit p-6 mx-10 bg-white border border-teal-400 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <form>
         <h1 class="text-2xl font-extrabold tracking-tight text-slate-500 dark:text-white">
             Create Job Listing
@@ -37,20 +37,54 @@
             </label>
         </div>
 
-        <!-- ==== EXPERIENCE ==== -->
-        <div class="relative z-0 w-full mb-6 group">
-            <input type="text" 
-                   name="floating_email" 
-                   id="floating_email" 
-                   v-model="Experience" 
-                   class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-                   placeholder=" " 
-                   required />
+        <div class="md:grid grid-cols-3 gap-2">
+            <!-- ==== EXPERIENCE ==== -->
+            <div class="relative z-0 w-full mb-6 group">
+                <input type="text" 
+                    name="floating_email" 
+                    id="floating_email" 
+                    v-model="Experience" 
+                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                    placeholder=" " 
+                    required />
 
-            <label for="floating_email" 
-                   class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                Experience
-            </label>
+                <label for="floating_email" 
+                    class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    Experience
+                </label>
+            </div>
+
+            <!-- ==== LOCATION ==== -->
+            <div class="relative z-0 w-full mb-6 group">
+                <input type="text" 
+                    name="floating_email" 
+                    id="floating_email" 
+                    v-model="Experience" 
+                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                    placeholder=" " 
+                    required />
+
+                <label for="floating_email" 
+                    class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    Location
+                </label>
+            </div>
+
+            <!-- ==== LOCATION ==== -->
+            <div class="relative z-0 w-full mb-6 group">
+                <input type="text" 
+                    name="floating_email" 
+                    id="floating_email" 
+                    v-model="Experience" 
+                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                    placeholder=" " 
+                    required />
+
+                <label for="floating_email" 
+                    class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    Timeline
+                </label>
+            </div>
         </div>
 
      
@@ -132,6 +166,24 @@
                         </label>
                     </div>
             </div>
+
+            <h6>Required Skills</h6>
+            <div class="flex flex-col items-start justify-start" ref="JobHighlighDiv">
+                    <div class="relative z-0 w-full mb-6 group">
+                        <input type="text" name="floating_email" 
+                               id="floating_email" 
+                               v-model="RequiredSkills" 
+                               @keyup.enter="addRequiredSkills" 
+                               class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                               placeholder=" " 
+                               required />
+
+                        <label for="floating_email" 
+                               class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                              Required Skills
+                        </label>
+                    </div>
+            </div>
          
 
         <!-- ==== ENDOFPARENTDIV === -->
@@ -160,7 +212,7 @@
              
                <div class="right">
                  <button class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    @click="apply">
+                         disabled>
                     Apply now
                 </button>
                </div>
@@ -173,15 +225,21 @@
             
                 <small class="text-sm font-bold text-gray-500 dark:text-white p-2">
                     {{ JobDescription }}
-                </small>                                                                                                     
+                </small> 
+                
+                <span v-if="JobDescription == ''">
+                    <h5 class="text-md font-bold tracking-tight text-slate-500 dark:text-white">
+                            No Job Description yet
+                    </h5> 
+                </span>
          </div>
         
      
 
      
-         <div class="flex flex-col items-start justify-start p-2 border-0 border-b border-gray-200 mb-4">
+         <div class="flex flex-col items-start justify-start p-2 border-0 border-b border-gray-200 mb-5">
             <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Job highlights</h2>
-                <ul class="mb-8 space-y-4 text-left text-gray-500 dark:text-gray-400">
+                <ul class=" space-y-4 text-left text-gray-500 dark:text-gray-400">
             
                     <span v-if="Jharray">
                         <span v-for="highlight in limitHiglight" :key="highlight">
@@ -199,39 +257,75 @@
                             <span>{{ JobHighlight }}</span>
                         </li>
                     </span>
+
+                    <span v-if="limitHiglight == ''">
+                        <h5 class="text-md font-bold tracking-tight text-slate-500 dark:text-white">
+                            No Job Higlight yet
+                        </h5> 
+                    </span>
                 </ul>
         </div>
 
+        <div class="flex flex-col items-start justify-start p-2 border-0 border-b border-gray-200 mb-4">    
+            <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Qualification</h2>
+                <ul class="text-gray-500 list-disc list-outside dark:text-gray-400 pl-5">
+                   
+                    <span v-for="rarp in QualificationsArray" :key="rarp">
+                        <li class="mb-1">{{ rarp }}</li>
+                    </span>
+                    
+                    <span v-if="Qualifications">
+                        <li>{{ Qualifications }}</li>
+                    </span>
+
+                    <span v-if="QualificationsArray == ''">
+                            <h5 class="text-md font-bold tracking-tight text-slate-500 dark:text-white">
+                                No Qualification added yet
+                            </h5> 
+                    </span>
+                </ul>
+          </div>
        
         <div class="flex flex-col items-start justify-start  border-0 border-b border-gray-200 mb-4">    
         <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Roles And Resposibilities</h2>
-            <ul class="text-gray-500 list-disc list-inside dark:text-gray-400 ">
+            <ul class="text-gray-500 list-disc list-outside dark:text-gray-400 pl-5">
 
-                <span v-for="rarp in QualificationsArray" :key="rarp">
-                    <li class="mb-1">{{ rarp }}</li>
+                <span>
+                    <li v-for="rolesandres in RoleandResArray" :key="rolesandres">
+                        {{ rolesandres }}
+                    </li>
                 </span>
-                
-                <span v-if="Qualifications">
-                    <li>{{ Qualifications }}</li>
+                    
+                <span v-if="RoleandRes">
+                    <li>{{ RoleandRes }}</li>
+                </span>
+
+                <span v-if="RoleandResArray == ''">
+                    <h5 class="text-md font-bold tracking-tight text-slate-500 dark:text-white">
+                        No Roles and Responsibilities yet
+                    </h5> 
                 </span>
             </ul>
         </div>
 
-        
-          <div class="flex flex-col items-start justify-start p-2 border-0 border-b border-gray-200 mb-4">    
-            <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Qualification</h2>
-                <ul class="text-gray-500 list-disc list-inside dark:text-gray-400">
-                    <span>
-                        <li v-for="rolesandres in RoleandResArray" :key="rolesandres">
-                            {{ rolesandres }}
-                        </li>
-                    </span>
-                    
-                    <span v-if="RoleandRes">
-                        <li>{{ RoleandRes }}</li>
-                    </span>
-                </ul>
+        <!-- ==== REQUIRED SKILLS ====  -->
+          <div class="border-0 border-b border-gray-200 text-slate-800 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <h5 class="text-2xl font-extrabold tracking-tight text-slate-500 dark:text-white">
+                    <i class="fa-regular fa-lightbulb"></i> Required Skills
+                </h5> 
           </div>
+
+          <span v-if="RequiredSkillsArray">
+                <span v-for="tags in RequiredSkillsArray" :key="tags" class="flex items-center justify-around max-w-xs p-2 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800">
+                        {{ tags }}
+                </span>
+          </span>
+
+          <span v-if="RequiredSkillsArray == ''">
+                <h5 class="text-md font-bold tracking-tight text-slate-500 dark:text-white">
+                     No required Skills added yet
+                </h5> 
+          </span>
        
         </div>
     </div>
@@ -252,9 +346,11 @@ export default {
         const Qualifications = ref('')
         const JobDescription = ref('')
         const RoleandRes = ref('')
+        const RequiredSkills = ref('')
         let Jharray = ref([])
         let QualificationsArray = ref([])
         let RoleandResArray = ref([])
+        let RequiredSkillsArray = ref([])
         
         
         const itemValue = (variableValue,object) => {
@@ -281,6 +377,11 @@ export default {
             return itemValue(RoleandRes.value,RoleandResArray.value),
                    RoleandRes.value = '' 
         }
+
+        const addRequiredSkills = () => { 
+            return itemValue(RequiredSkills.value,RequiredSkillsArray.value),
+                   RequiredSkills.value = '' 
+        }
         
         
 
@@ -297,7 +398,10 @@ export default {
             addQualification,
             RoleandRes,
             RoleandResArray,
-            addRolesAnResposibilities
+            addRolesAnResposibilities,
+            RequiredSkills,
+            addRequiredSkills,
+            RequiredSkillsArray
         }
 
          return  dataobject 

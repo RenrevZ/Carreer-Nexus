@@ -35,7 +35,7 @@
             <div v-for="tags in jobs.tags" :key="tags" class="flex items-center justify-around max-w-xs p-2 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800">
                     {{ tags }}
             </div>
-      </div>
+          </div>
         </div>
 
     <div class="left max-w-xl">
