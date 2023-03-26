@@ -4,7 +4,7 @@
     <div class="flex justify-around items-center">
         <div class="left">
             <i class="fa-solid fa-lightbulb text-teal-500 text-2xl"></i>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 text-2xl">Job Solution</span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 text-2xl">Carreer Nexus</span>
         </div>
 
         <div class="center hidden md:block">

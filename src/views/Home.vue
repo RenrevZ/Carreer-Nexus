@@ -1,6 +1,6 @@
 <template>
 <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-1xl lg:text-4xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
-  Job Solution</span> A Employment Detective.
+  Career Nexus</span> A Employment Detective.
 </h1>
 
 <p>Empowering people, building communities, securing futures: Employment for all!</p>
