@@ -90,7 +90,7 @@
         <div v-if="isLoading">
             <div class="flex flex-col items-start justify-start  border-0 border-b border-gray-200 mb-4">    
             <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Roles And Resposibilities</h2>
-                <ul class="text-gray-500 list-disc list-inside dark:text-gray-400 " 
+                <ul class="text-gray-500 list-disc list-outside dark:text-gray-400 " 
                 v-for="rarp in jobs.RolesAnResposibilities" :key="rarp">
                     <li class="mb-1">{{ rarp }}</li>
                 </ul>
@@ -116,6 +116,7 @@
         </div>
         </div>
       </div>
+
     </div>
 
    
@@ -132,6 +133,7 @@ import getUser from '@/composables/getUser'
 import Login from '../components/Login'
 import { ref } from 'vue'
 import LoadingAnimate from '@/components/LoadingAnimate'
+
 
 export default {
     components: { Login,LoadingAnimate },

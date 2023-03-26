@@ -75,7 +75,7 @@
                 <input type="text" 
                     name="floating_email" 
                     id="floating_email" 
-                    v-model="Experience" 
+                    v-model="Timeline" 
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
                     placeholder=" " 
                     required />
@@ -187,14 +187,24 @@
          
 
         <!-- ==== ENDOFPARENTDIV === -->
-     
-
     </form>
+    <div v-if="isLoading">
+        <button class="w-full bg-slate-300 text-slate-800 font-semibold p-2 shadow-md rounded"
+                readonly>
+            Posting.....
+        </button>
+    </div>
+    <div v-else>
+        <button class="w-full bg-teal-600 text-white font-semibold p-2 shadow-md hover:scale-105 ease-in duration-100 rounded"
+            @click="postJob">
+            Post Job
+        </button>
+    </div>
 </div>
 
 <div class="left max-w-xl">
        <div class=" p-6 mb-6 bg-white border border-teal-400 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-         <div class="w-full border-0 border-b border-gray-200 text-gray-900 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+         <div class="border-0 border-b border-gray-200 text-gray-900 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <div class="flex justify-around items-center">
                <div class="left">
                     <h5 class="text-lg font-extrabold tracking-tight text-slate-500 dark:text-white">
@@ -211,7 +221,7 @@
                </div>
              
                <div class="right">
-                 <button class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                 <button class="text-white bg-slate-300 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                          disabled>
                     Apply now
                 </button>
@@ -338,6 +348,10 @@
 
 <script>
 import { computed,ref } from 'vue';
+import { useRouter } from 'vue-router'
+import getUser from '@/composables/getUser'
+import useData from '@/composables/useData'
+
 export default {
     setup(){
         const JobHighlighDiv = ref(null)
@@ -347,10 +361,15 @@ export default {
         const JobDescription = ref('')
         const RoleandRes = ref('')
         const RequiredSkills = ref('')
+        const Experience = ref('')
+        const Timeline = ref('')
         let Jharray = ref([])
         let QualificationsArray = ref([])
         let RoleandResArray = ref([])
         let RequiredSkillsArray = ref([])
+        const {error, addDoc, isLoading} = useData('Jobs')
+        const route = useRouter()
+        const { user } = getUser()
         
         
         const itemValue = (variableValue,object) => {
@@ -358,8 +377,6 @@ export default {
                     object.push(variableValue)
                 }
         }
-        
-        
         
         const limitHiglight = computed(() => Jharray.value.slice(0,5))
 
@@ -383,7 +400,20 @@ export default {
                    RequiredSkills.value = '' 
         }
         
-        
+        const postJob = async () => {
+           await addDoc({
+                JobDescription: JobDescription.value,
+                JobHighlights: Jharray.value,
+                Qualifications: QualificationsArray.value,
+                RolesAnResposibilities: RoleandResArray.value,
+                tags: RequiredSkillsArray.value,
+                Timeline: Timeline.value,
+                Experience: Experience.value,
+                companyListed:user.value.uid
+            })
+
+            route.push({name:'JobList'})
+        }
 
         const dataobject = {
             JobHighlighDiv,
@@ -401,7 +431,11 @@ export default {
             addRolesAnResposibilities,
             RequiredSkills,
             addRequiredSkills,
-            RequiredSkillsArray
+            RequiredSkillsArray,
+            postJob,
+            Experience,
+            isLoading,
+            Timeline
         }
 
          return  dataobject 
