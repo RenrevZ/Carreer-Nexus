@@ -24,6 +24,12 @@ const routes = [
     name: 'postJob',
     component: () => import('../components/CreateJob'),
     props: true
+  },
+  {
+    path: '/mylisting',
+    name: 'mylistng',
+    component: () => import('../views/Mylisting'),
+    props: true
   }
 ]
 

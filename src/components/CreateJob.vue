@@ -1,6 +1,6 @@
 <template>
 <div class="md:grid grid-cols-2 gap-2">
-<div class="max-w-screen-xl max-h-fit p-6 mx-10 bg-white border border-teal-400 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div class="max-w-screen-xl max-h-100 p-6 mx-10 bg-white border border-teal-400 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <form>
         <h1 class="text-2xl font-extrabold tracking-tight text-slate-500 dark:text-white">
             Create Job Listing
@@ -87,7 +87,15 @@
             </div>
         </div>
 
-     
+        <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-16 py-1 shadow-md mb-10" role="alert">
+            <div class="flex">
+                <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                <div>
+                <p class="text-sm">Please use <b>Enter</b> key to add data.</p>
+                <p class="text-sm">you can rely on preview data on right for refference.</p>
+                </div>
+            </div>
+        </div>
 
          <div class="first-row">
             <h6>Job Highlights</h6>
@@ -230,10 +238,10 @@
         </div>
 
     
-        <div class="flex flex-col items-start justify-start p-2 border-0 border-b border-gray-200 mb-4">
+        <div class="flex flex-col items-start justify-start border-0 border-b border-gray-200 mb-4">
             <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Job Description</h2>
             
-                <small class="text-sm font-bold text-gray-500 dark:text-white p-2">
+                <small class="text-sm font-bold text-gray-500 dark:text-white">
                     {{ JobDescription }}
                 </small> 
                 
@@ -263,7 +271,7 @@
                     
                     <span v-if="JobHighlight">
                         <li>
-                            <i class="fa-solid fa-check  text-green-500 dark:text-green-400 p-1"></i>
+                            <i class="fa-solid fa-check  text-green-500 dark:text-green-400 p-1 "></i>
                             <span>{{ JobHighlight }}</span>
                         </li>
                     </span>
@@ -370,6 +378,7 @@ export default {
         const {error, addDoc, isLoading} = useData('Jobs')
         const route = useRouter()
         const { user } = getUser()
+        const maxCharsPerLine = ref(20)
         
         
         const itemValue = (variableValue,object) => {
@@ -379,7 +388,31 @@ export default {
         }
         
         const limitHiglight = computed(() => Jharray.value.slice(0,5))
+        const wordbreak = (variable) => {
+            let words = variable.split(' ');
+            let lines = [];
+            let line = '';
+            
 
+            for (let i = 0; i < words.length; i++) {
+                let word = words[i];
+
+                if (line.length + word.length <= maxCharsPerLine.value) {
+                    line += word + ' ';
+                } else {
+                    lines.push(line.trim());
+                    line = word + ' ';
+                }
+            }
+
+            lines.push(line.trim());
+
+            return lines.join('<br>');
+        }
+
+        const DescriptionwordBreak = computed(() => wordbreak(JobDescription.value))
+
+       
         const addItem = () => { 
             return itemValue(JobHighlight.value,Jharray.value),
                   JobHighlight.value = '' 
@@ -435,7 +468,9 @@ export default {
             postJob,
             Experience,
             isLoading,
-            Timeline
+            Timeline,
+            // word break every data
+            DescriptionwordBreak
         }
 
          return  dataobject 

@@ -34,7 +34,7 @@
 
         <div v-else class="flex justify-around items-center">
             <router-link :to="{name:'postJob'}" class="border-r-2 border-teal-700 px-3 cursor-pointer">Post a job</router-link>
-            <p class="border-r-2 border-teal-700 px-3">My Listing</p>
+            <router-link :to="{name:'mylistng'}" class="border-r-2 border-teal-700 px-3">My Listing</router-link>
             <h3 class="p-2">Hi there, {{ user.displayName }}</h3>
             <button @click="Logout" type="button" class="text-white shadow bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Logout

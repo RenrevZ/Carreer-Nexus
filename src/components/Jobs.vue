@@ -1,6 +1,6 @@
 <template>
-  <div v-for="job in jobs" :key="job.id" class="mx-auto text-center border-l-4 border-teal-600">
-        <router-link :to="{name:'JobDetails',params:{id:job.id}}" class="block max-w-md p-6 bg-white border border-gray-200  shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+  <div v-for="job in jobs" :key="job.id" class="mx-auto text-center">
+        <router-link :to="{name:'JobDetails',params:{id:job.id}}" class=" rounded-lg block max-w-md p-6 bg-white border border-gray-200  shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <div class="flex items-start justify-around">
                 <div class="left">
                     <i class="fa-solid fa-briefcase text-sky-800 text-5xl"></i>
@@ -8,8 +8,8 @@
                 </div>
                  
                 <div class="right">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ job.Company }}</h5>
-                    <p class="font-normal text-gray-700 dark:text-gray-400 p-4">{{ job.JobDescription.substring(0,100) + '....see more' }}</p>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-normal">{{ job.Company }}</h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400 p-4">{{ job.JobDescription.substring(0,50) + '....see more' }}</p>
                 </div>
             </div>
             
