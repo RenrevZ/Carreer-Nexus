@@ -35,15 +35,18 @@
                         </div>
 
                         <small class="text-red-800">{{ error }}</small>
+                        
                         <span v-if="isLoading">
                             <button class="w-full text-white bg-teal-700 hover:bg-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" disabled>Logging in...</button>
                         </span>
                         <span v-else>
                             <button type="submit" class="w-full text-white bg-teal-700 hover:bg-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login to your account</button>
                         </span>
+
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                             Not registered? <a class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
                         </div>
+                        
                     </form>
                 </div>
         </div>
@@ -53,30 +56,31 @@
 </template>
     
 <script>
-import Login from '@/composables/Login'
+import LoginUser from '@/composables/LoginUser'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 export default {
-        props: ['showLoginModal','showLoginfirst'],
-        emits: ['closemodal'],
-        setup(props,{emit}){
+    name:'Login',
+    props: ['showLoginModal','showLoginfirst'],
+    emits: ['closemodal'],
+    setup(props,{emit}){
             
-            const email = ref('')
-            const password = ref('')
-            const {error,login,isLoading} = Login()
-            const router = useRouter()
+        const email = ref('')
+        const password = ref('')
+        const {error,login,isLoading} = LoginUser()
+        const router = useRouter()
 
-            const CloseEmit = () => emit('closemodal')
+        const CloseEmit = () => emit('closemodal')
 
-            const loginUser = async () => {
-                await login(email.value,password.value)
-                if(!error.value){
-                    router.push({name:'JobList'});
-                }
+        const loginUser = async () => {
+            await login(email.value,password.value)
+            if(!error.value){
+                router.push({name:'JobList'});
             }
+        }
     
             return { CloseEmit,loginUser,email,password,error,isLoading}
-        }
+    }
 }
 </script>
 

@@ -73,18 +73,24 @@
 <script>
 import { ref } from '@vue/reactivity'
 import SignupUser from '../composables/SignupUser'
+import { useRouter } from 'vue-router'
 export default {
     props: ['showSignupModal'],
     emits: ['closemodal'],
     setup(props,{emit}){
+        //==== INPUTS
         const username  = ref('')
         const email  = ref('')
         const password = ref('')
         const confirm_password = ref('')
         const {error,signup} = SignupUser()
 
+        //==== ROUTER
+        const router =  useRouter()
+
         const submit = async () => {
             await signup(email.value,password.value,username.value)
+            router.push({name:'Setup'})
         }
 
         const CloseEmit = () => {

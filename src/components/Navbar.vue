@@ -1,6 +1,6 @@
 <template>
   
-<nav class="bg-white shadow p-2 mb-3 sticky top-0">
+<nav class="bg-white shadow p-2 sticky top-0">
     <div class="flex justify-around items-center">
         <div class="left">
             <i class="fa-solid fa-lightbulb text-teal-500 text-2xl"></i>
@@ -56,13 +56,14 @@
 
 <script>
 import { ref } from '@vue/reactivity'
+import Login from '@/components/Login.vue'
 import SignIn from '../components/SignIn'
 import toggleModal from '../composables/toggleModal'
 import getUser from '@/composables/getUser'
 import useLogout from '@/composables/useLogout'
 
 export default {
-    components: { SignIn },
+    components: { SignIn,Login },
     props: ['showSignupModal'],
     setup(){
         const {SignupModaltoggle,showSigupModal,LoginModaltoggle,showLoginModal} = toggleModal()

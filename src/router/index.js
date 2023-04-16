@@ -30,6 +30,11 @@ const routes = [
     name: 'mylistng',
     component: () => import('../views/Mylisting'),
     props: true
+  },
+  {
+    path: '/setup',
+    name: 'Setup',
+    component: () => import('@/components/Setup')
   }
 ]
 

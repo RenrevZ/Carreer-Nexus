@@ -23,7 +23,7 @@ import { ref } from '@vue/reactivity'
 import Jobs from '../components/Jobs'
 import getData from '../composables/getData'
 import SignIn from '../components/SignIn'
-import Login from '../components/Login'
+import Login from '@/components/Login.vue'
 import toggleModal from '../composables/toggleModal'
 import Search from '@/components/Search'
 
@@ -36,13 +36,17 @@ export default {
       const {SignupModaltoggle,showSigupModal,LoginModaltoggle,showLoginModal} = toggleModal()
     
     loadData()
-    return { jobs,
+
+    const data_object =  { jobs,
             loadData,
             SignupModaltoggle,
             showSigupModal,
             LoginModaltoggle,
             showLoginModal
         }
+
+      
+    return data_object
   }
 }
 </script> 

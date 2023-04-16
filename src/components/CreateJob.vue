@@ -387,6 +387,7 @@ export default {
                 }
         }
         
+        //=== limit the items by 5
         const limitHiglight = computed(() => Jharray.value.slice(0,5))
         const wordbreak = (variable) => {
             let words = variable.split(' ');
@@ -433,6 +434,7 @@ export default {
                    RequiredSkills.value = '' 
         }
         
+        //=== ADDING EVERY DATA TO THE FIREBASE
         const postJob = async () => {
            await addDoc({
                 JobDescription: JobDescription.value,
