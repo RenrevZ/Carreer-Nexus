@@ -1,5 +1,5 @@
 <template>
-  <div class="m-auto flex justify-center items-center p-5">
+  <div class="flex justify-center items-center p-5 -scroll-mt-36" id="search">
   <form class="lg:w-1/2 w-full">   
     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div class="relative">
@@ -20,5 +20,7 @@ export default {
 </script>
 
 <style>
-
+  #search{
+     margin-top: -50px;
+  }
 </style>

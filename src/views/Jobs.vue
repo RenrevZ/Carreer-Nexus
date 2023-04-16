@@ -1,4 +1,6 @@
 <template>
+<div class="showcase p-20">
+</div>
     <Search/>
 
     <div class="flex">

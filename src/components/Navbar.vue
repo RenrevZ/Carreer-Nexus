@@ -2,8 +2,8 @@
   
 <nav class="bg-white shadow p-2 sticky top-0">
     <div class="flex justify-around items-center">
-        <div class="left">
-            <i class="fa-solid fa-lightbulb text-teal-500 text-2xl"></i>
+        <div class="left flex">
+            <img src="@/assets/img/1930254_green_triforce_zelda_icon.png" alt="" class="icon">
             <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 text-2xl">Carreer Nexus</span>
         </div>
 
@@ -80,5 +80,7 @@ export default {
 </script>
 
 <style>
-
+.icon{
+    height: 30px;
+}
 </style>

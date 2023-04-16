@@ -1,9 +1,11 @@
 <template>
-<h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-1xl lg:text-4xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
-  Career Nexus</span> A Employment Detective.
-</h1>
+<div class="showcase p-20">
+  <h1 class="mb-4 text-3xl font-extrabold text-white dark:text-white  md:text-1xl lg:text-4xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-sky-600 from-slate-100">
+    Career Nexus</span> A Employment Detective.
+  </h1>
 
-<p>Empowering people, building communities, securing futures: Employment for all!</p>
+  <p class="text-white">Empowering people, building communities, securing futures: Employment for all!</p>
+</div>
 <Search/>
 
   <!-- ==== JOBS DATA === -->
@@ -56,5 +58,10 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .showcase{
+    background: url('@/assets/img/abstracMinimalist.png');
+    background-position: center;
+    background-repeat: no-repeat;
   }
 </style>
