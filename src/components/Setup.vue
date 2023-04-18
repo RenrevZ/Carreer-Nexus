@@ -1,6 +1,6 @@
 <template>
 <div class="grid md:grid-cols-2 ">
-        <div class="font-extrabold flex justify-center items-center h-screen border-r-2 border-lime-700">
+        <div class="font-extrabold flex justify-center items-center h-screen">
             <div class="rounded p-10 bg-white">
             
                 <h1 class="text-5xl mb-6">Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Career Nexus</span></h1>

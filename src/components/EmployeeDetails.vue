@@ -1,7 +1,23 @@
 <template>
   <div class="flex flex-col px-10">
-        <h4 class="text-2xl font-bold my-10">Employee Details</h4>
-        <div class="grid grid-cols-3 gap-2">
+        <h4 class="text-2xl font-bold my-5">Employee Details</h4>
+        <!-- === IMAGE UPLOAD ==== -->
+        <div class="grid grid-cols-2 gap-2">
+            <div class="d-flex flex-col justify-center items-center">
+                <div class="w-36 h-36 mb-3 rounded-full border-2 border-gray-400 overflow-hidden">
+                    <img ref="preview" 
+                         class="w-full h-full object-cover object-center" 
+                         :src="imageUrl" alt="preview" />
+                </div>
+                
+                <input type="file"
+                       class="block w-65 mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                       accept="image/*"
+                       ref="imageToUpload"
+                       @change="previewImage" />
+            </div>
+           
+            <div>
                 <!-- == FIRST NAME ==  -->
                 <div class="flex flex-col items-start">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -39,6 +55,7 @@
                             v-model="lastName" 
                             required>
                 </div>
+            </div>
         </div>
 
 
@@ -81,7 +98,7 @@
             </div>
         </div>
 
-        <h1 class="mt-10">Work Experience</h1>
+        <h1 class="mt-5">Work Experience</h1>
 
         <div class="grid grid-cols-2 gap-2 pt-5">
            <!-- == Gender ==  -->
@@ -153,11 +170,11 @@
             <i class="fa-solid fa-circle-plus mt-5 text-teal-600 text-2xl"></i>
         </div>
 
-        <div v-if="isLoading">
+        <div v-if="isLoading" class="pb-10">
             <button @click="createProfile" class="w-full bg-teal-500 text-white p-2 shadow rounded-full" disabled>Creating...</button>
         </div>
 
-        <div v-else>
+        <div v-else class="pb-10">
             <button @click="createProfile" class="w-full bg-teal-500 text-white p-2 shadow rounded-full">Create Profile</button>
         </div>
     </div>
@@ -168,6 +185,8 @@ import { ref } from 'vue'
 import useData from '@/composables/useData'
 import getUser from '@/composables/getUser'
 import { useRouter } from 'vue-router'
+import Storage from '@/composables/Storage'
+
 export default {
     setup(){
         //=== inputs
@@ -189,6 +208,11 @@ export default {
         const { error, addDoc, isLoading} = useData('EmployeeDetails')
         const { user } = getUser()
 
+        //=== IMAGE UPLOAD
+        const {url,filePath,uploadImage} = Storage()
+        const imageToUpload = ref('')
+        const fileError = ref(null)
+
         const showError = (input) => {
             let error = ''
             if(input == ''){
@@ -200,6 +224,7 @@ export default {
 
         
         const createProfile = async () => {
+                await uploadImage(imageToUpload.value)
                 await addDoc({
                     firstName: firstName.value,
                     middleName : middleName.value,
@@ -211,9 +236,34 @@ export default {
                     CompanyAddress : CompanyAddress.value,
                     WorkExp : WorkExp.value,
                     DateLeave : DateLeave.value,
-                    user : user.value.uid
+                    user : user.value.uid,
+                    coverUrl: url.value,
+                    filePath: filePath.value,
                 })
               router.push({name:'mylistng'})
+        }
+
+        const filetype = ['image/png','image/jpeg']
+
+        // PREVIEW IMAGE
+        const imageUrl = ref("https://via.placeholder.com/150");
+        const previewImage = (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                imageUrl.value = reader.result;
+            }, false);
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+
+            if(file && filetype.includes(file.type)){
+                imageToUpload.value = file
+                fileError.value = null
+            }else{
+                imageToUpload.value = null
+                fileError.value = 'Please select an image file (png/jpg)'
+            }
         }
 
         const dataObject = {
@@ -230,7 +280,10 @@ export default {
             DateLeave,
             isLoading,
             error,
-            showError
+            showError,
+            previewImage,
+            imageUrl,
+            imageToUpload
         }
 
         return dataObject
