@@ -139,7 +139,7 @@ export default {
     components: { Login,LoadingAnimate },
     props: ['id'],
     setup(props,{emit}){
-        const { error, jobs ,isLoading} = getSingleData(props.id)
+        const { error, jobs ,isLoading} = getSingleData(props.id,'Jobs')
         const { user } = getUser()
         let showLoginModal = ref(false)
         let showLoginfirst = ref(false)

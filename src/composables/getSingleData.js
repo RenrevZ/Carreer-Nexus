@@ -1,13 +1,13 @@
 import { ref } from '@vue/reactivity'
 import { projectFirestore } from '../firebase/config'
 
-const getSingleData =  (id) => {
+const getSingleData =  (id,collection) => {
     const jobs = ref([])
     const error = ref([])
     const isLoading = ref(false)
 const loadData = async () => {
     try{
-        const response = await projectFirestore.collection('Jobs')
+        const response = await projectFirestore.collection(collection)
         .doc(id).get() //this fetch the data
         
         jobs.value = {...response.data()}

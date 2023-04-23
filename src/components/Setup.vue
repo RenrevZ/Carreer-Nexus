@@ -44,12 +44,10 @@ export default {
 
         const employer = () => {
             showEmployee.value = false
-            console.log('employer')
         }
 
         const employee = () => {
             showEmployee.value = true
-            console.log('employee')
         }
 
         const SubmitEmployee = () => {

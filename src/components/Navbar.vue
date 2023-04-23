@@ -23,7 +23,7 @@
             </ul>
         </div>
 
-        <div class="right hidden md:block" v-if="!user">
+        <div class="right hidden md:block" v-if="!currentUser">
             <button @click="SignupModaltoggle" type="button" class="text-white shadow bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Sign up
             </button>
@@ -33,9 +33,20 @@
         </div>
 
         <div v-else class="flex justify-around items-center">
-            <router-link :to="{name:'postJob'}" class="border-r-2 border-teal-700 px-3 cursor-pointer">Post a job</router-link>
-            <router-link :to="{name:'mylistng'}" class="border-r-2 border-teal-700 px-3">My Listing</router-link>
-            <h3 class="p-2">Hi there, {{ user.displayName }}</h3>
+            <router-link :to="{name:'postJob'}" 
+                          class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200"
+                          data-tooltip-target="Post a Job">
+                <i class="fa-solid fa-table-list text-2xl text-slate-400 hover:text-teal-500"></i>
+            </router-link>
+
+            <router-link :to="{name:'mylistng'}" 
+                         class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200"
+                         data-tooltip-target="User Profile">
+                  <i class="fa-solid fa-user text-xl text-slate-400 hover:text-teal-500"></i>
+            </router-link>
+
+
+            <!-- <h3 class="p-2">Hi there, {{ user.displayName }}</h3> -->
             <button @click="Logout" type="button" class="text-white shadow bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Logout
             </button>
@@ -61,20 +72,38 @@ import SignIn from '../components/SignIn'
 import toggleModal from '../composables/toggleModal'
 import getUser from '@/composables/getUser'
 import useLogout from '@/composables/useLogout'
+import { useRoute, useRouter } from 'vue-router'
+import { watch } from 'vue'
 
 export default {
     components: { SignIn,Login },
     props: ['showSignupModal'],
     setup(){
+        // COMPOSABLES
         const {SignupModaltoggle,showSigupModal,LoginModaltoggle,showLoginModal} = toggleModal()
-        const { user } = getUser()
+        const { currentUser } = getUser()
         const { logout } = useLogout()
 
+        // ROUTER
+        const router =  useRouter()
+
+        // LOGOUT
         const Logout = () => {
             logout()
+            router.push({name:'Home'})
         }
 
-        return { SignupModaltoggle,showSigupModal,LoginModaltoggle,showLoginModal,user,Logout}
+        // ROUTER
+        const route = useRoute()
+        
+        // WATCH FOR ROUTE CHANGES
+        watch(() => route.path, (newVal) => {
+            if (newVal === '/setup') {
+                showSigupModal.value = false
+            }
+        })
+
+        return { SignupModaltoggle,showSigupModal,LoginModaltoggle,showLoginModal,currentUser,Logout}
     }
 }
 </script>
@@ -82,5 +111,26 @@ export default {
 <style>
 .icon{
     height: 30px;
+}
+
+[data-tooltip-target]::before {
+  content: attr(data-tooltip-target);
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  padding:15px 5px;
+  text-align: start;
+  background-color: #34d399;
+  color: #fff;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+[data-tooltip-target]:hover::before {
+  opacity: 1;
+  bottom: calc(100% + 0.5rem); 
 }
 </style>

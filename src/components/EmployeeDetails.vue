@@ -11,7 +11,7 @@
                 </div>
                 
                 <input type="file"
-                       class="block w-65 mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                       class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-600 file:text-white hover:file:bg-teal-800"
                        accept="image/*"
                        ref="imageToUpload"
                        @change="previewImage" />
@@ -106,7 +106,7 @@
                     <span class="flex">
                         <i class="fa-solid fa-building pr-3"></i>
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Company
+                            Position
                         </label>
                     </span>
                         <input type="email" 
@@ -206,7 +206,7 @@ export default {
         
         //=== COMPOSABLES
         const { error, addDoc, isLoading} = useData('EmployeeDetails')
-        const { user } = getUser()
+        const { currentUser } = getUser()
 
         //=== IMAGE UPLOAD
         const {url,filePath,uploadImage} = Storage()
@@ -236,7 +236,7 @@ export default {
                     CompanyAddress : CompanyAddress.value,
                     WorkExp : WorkExp.value,
                     DateLeave : DateLeave.value,
-                    user : user.value.uid,
+                    user : currentUser.value.uid,
                     coverUrl: url.value,
                     filePath: filePath.value,
                 })
@@ -253,6 +253,7 @@ export default {
             reader.addEventListener("load", () => {
                 imageUrl.value = reader.result;
             }, false);
+            
             if (file) {
                 reader.readAsDataURL(file);
             }

@@ -6,7 +6,6 @@ let showSigupModal = ref(false)
 
 const LoginModaltoggle = () => showLoginModal.value = !showLoginModal.value
 
-
 const SignupModaltoggle = () =>  showSigupModal.value = !showSigupModal.value
 
 const toggleModal = () => {

@@ -1,11 +1,11 @@
 <template>
-  
+  <EmployeeProfile />
 </template>
 
 <script>
-import Setup from '@/components/Setup.vue'
+import EmployeeProfile from '@/components/EmployeeProfile.vue';
 export default {
-
+    components: {EmployeeProfile}
 }
 </script>
 

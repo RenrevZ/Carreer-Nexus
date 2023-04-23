@@ -1,10 +1,26 @@
 <template>
 <transition name="fade">
     <div class="flex flex-col px-10">
-          <h4 class="text-2xl font-bold my-10">Company Details</h4>
+          <h4 class="text-2xl font-bold my-2">Company Details</h4>
+
           <div class="grid grid-cols-2 gap-2">
-                  <!-- == FIRST NAME ==  -->
-                  <div class="flex flex-col items-start">
+            <div class="d-flex flex-col justify-center items-center">
+                <div class="w-36 h-36 mb-3 rounded-full border-2 border-gray-400 overflow-hidden">
+                    <img ref="preview" 
+                         class="w-full h-full object-cover object-center" 
+                         :src="imageUrl" alt="preview" />
+                </div>
+                
+                <input type="file"
+                       class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-600 file:text-white hover:file:bg-teal-800"
+                       accept="image/*"
+                       ref="imageToUpload"
+                       @change="previewImage" />
+            </div>
+           
+            <div>
+               <!-- == FIRST NAME ==  -->
+               <div class="flex flex-col items-start">
                       <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                           Company Name
                       </label>
@@ -28,22 +44,23 @@
                               v-model="companyLocation" 
                               required>
                   </div>
-          </div>
-  
-  
-          <div class="grid grid-cols-2 gap-2 pt-5">
-              <!-- == Address ==  -->
+
+                 <!-- == Address ==  -->
               <div class="flex flex-col items-start">
                       <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Company size
                       </label>
-                          <input type="email" 
-                              name="email" 
-                              id="email" 
-                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                              v-model="companySize" 
-                              required>
+                    <input type="email" 
+                           name="email" 
+                           id="email" 
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                           v-model="companySize" 
+                           required>
               </div>
+            </div>
+        </div>
+  
+        <div class="grid grid-cols-2 gap-2">
               <!-- == Age ==  -->
               <div class="flex flex-col items-start">
                       <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -59,7 +76,7 @@
           </div>
   
          
-        <div class="flex flex-col justify-start-align-start mt-10 mb-5">
+        <div class="flex flex-col justify-start-align-start mt-2 mb-5">
             <label for="message" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Company History</label>
             <textarea id="message" 
                       rows="13" 
@@ -85,7 +102,9 @@ import { ref } from 'vue'
 import useData from '@/composables/useData'
 import getUser from '@/composables/getUser'
 import { useRouter } from 'vue-router'
-  export default {
+import Storage from '@/composables/Storage'
+
+export default {
     setup(){
         //=== INPUTS
         const companyName = ref('')
@@ -101,17 +120,46 @@ import { useRouter } from 'vue-router'
         const { error, addDoc, isLoading} = useData('Company')
         const { user } = getUser()
 
+        //=== IMAGE UPLOAD
+        const {url,filePath,uploadImage} = Storage()
+        const imageToUpload = ref('')
+        const fileError = ref(null)
+        const filetype = ['image/png','image/jpeg']
+        // PREVIEW IMAGE
+        const imageUrl = ref("https://via.placeholder.com/150");
+        const previewImage = (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                imageUrl.value = reader.result;
+            }, false);
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+
+            if(file && filetype.includes(file.type)){
+                imageToUpload.value = file
+                fileError.value = null
+            }else{
+                imageToUpload.value = null
+                fileError.value = 'Please select an image file (png/jpg)'
+            }
+        }
+
         const createCompany = async () => {
+            await uploadImage(imageToUpload.value)
             await addDoc({
                 companyName : companyName.value,
                 companyLocation : companyLocation.value,
                 companySize : companySize.value,
                 industry : industry.value,
                 history : history.value,
-                user : user.value.uid
+                user : user.value.uid,
+                coverUrl: url.value,
+                filePath: filePath.value
             })
 
-            router.push({name:'JobDetails'})
+            router.push({name:'mylistng'})
         }
 
         const dataObject = {
@@ -121,7 +169,10 @@ import { useRouter } from 'vue-router'
             industry,
             history,
             createCompany,
-            isLoading
+            isLoading,
+            previewImage,
+            imageUrl,
+            imageToUpload
         }
         return dataObject
     }

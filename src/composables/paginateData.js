@@ -4,6 +4,7 @@ import { projectFirestore } from '../firebase/config'
 const jobs = ref([])
 const pageSize = 10
 const currentPage = ref(1)
+const isLoading = ref(false)
 
 const totalPages = computed(() => Math.ceil(jobs.value.length / pageSize))
 
@@ -23,19 +24,25 @@ const currentPageItems = computed(() => {
 
 
 const loadData = async (search) => {
-      const querySnapshot = await projectFirestore
-      .collection('Jobs')
-      .orderBy('Company')
-      .limit(pageSize)
-      .startAfter(startAfter.value)
-      .get()
-      
-      if(search){
-        jobs.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-                     .filter(job => job.Company.toLowerCase().includes(search.toLowerCase()))
-      }else{
-        jobs.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      try{
+            isLoading.value = true
+            const querySnapshot = await projectFirestore
+            .collection('Jobs')
+            .orderBy('Company')
+            .limit(pageSize)
+            .startAfter(startAfter.value)
+            .get()
+            
+            if(search){
+              jobs.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+                           .filter(job => job.Company.toLowerCase().includes(search.toLowerCase()))
+            }else{
+              jobs.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+            }
+      }catch(err){
+            console.log(err)
       }
+      isLoading.value = false
 }
 
 const nextPage = () => {
@@ -58,7 +65,8 @@ const paginateData = () => {
         nextPage,
         previousPage,
         jobs,
-        loadData
+        loadData,
+        isLoading
     }
 }
 
