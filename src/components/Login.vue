@@ -78,8 +78,16 @@ export default {
                 router.push({name:'JobList'});
             }
         }
-    
-            return { CloseEmit,loginUser,email,password,error,isLoading}
+        
+        const dataObject = { 
+            CloseEmit,
+            loginUser,
+            email,
+            password,
+            error,
+            isLoading
+        }
+        return dataObject
     }
 }
 </script>

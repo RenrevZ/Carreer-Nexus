@@ -33,7 +33,7 @@ const getData = (collectionName) => {
     }
   }
 
-  return { error, data, loadData }
+  return { error, data, loadData,isLoading }
 }
 
 export default getData

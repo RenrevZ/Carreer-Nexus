@@ -118,10 +118,6 @@
       </div>
 
     </div>
-
-   
-
-   
  
     <!-- === SHOW LOGIN WHEN THE USER IS NOT LOGGED IN == -->
     <Login :showLoginModal="showLoginModal" @closemodal="closeModal" :showLoginfirst="showLoginfirst"/>

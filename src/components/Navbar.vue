@@ -100,6 +100,8 @@ export default {
         watch(() => route.path, (newVal) => {
             if (newVal === '/setup') {
                 showSigupModal.value = false
+            }else if(newVal === '/jobs'){
+                showLoginModal.value = false
             }
         })
 
