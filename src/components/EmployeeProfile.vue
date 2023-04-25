@@ -20,19 +20,12 @@
                 </p>
 
                 <div class="flex flex-col justify-start items-start">
-                    <h1 class="text-1xl font-bold text-center">Skills</h1>
-                    <div class="grid grid-cols-3 gap-2 mb-5">
-                        <span class="rounded-full bg-sky-400 text-slate-100 px-10 py-2 text-center">
-                            Vue
-                        </span>
-                        <span class="rounded-full bg-sky-400 text-slate-100 px-10 py-2 text-center">
-                            Laravel
-                        </span>
-                        <span class="rounded-full bg-sky-400 text-slate-100 px-10 py-2 text-center">
-                            Mysql
-                        </span>
-                        <span class="rounded-full bg-sky-400 text-slate-100 px-10 py-2 text-center">
-                            Tailwind
+                    <h1 class="text-1xl font-bold text-center mb-3">Skills</h1>
+                    <div class="grid grid-cols-3 gap-5 mb-6">
+                        <span v-for="skill in creds.skills" :key="skill">
+                            <span class="rounded-full bg-sky-400 text-slate-100 px-5 py-2 whitespace-nowrap">
+                              {{ skill }}
+                            </span>
                         </span>
                     </div>
                      
@@ -137,8 +130,59 @@
                     <small>August 8 - Present | Quezon Ave,Quezon City</small>
                 </div>
             </div>
+
+            <div class="flex justify-start items-start">
+                <i class="fa-solid fa-circle-plus text-sky-800 text-2xl cursor-pointer pt-5"
+                               @click="isOpen = true">
+                            </i>
+            </div>
         </div>
     </div>
+  </div>
+
+  <div
+      v-if="isOpen"
+      class="fixed inset-0 z-10 overflow-y-auto"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="modal-title"
+      @keydown.escape="isOpen = false"
+    >
+      <div class="flex items-center justify-center min-h-screen">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          aria-hidden="true"
+        ></div>
+
+        <div
+          class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full"
+          role="document"
+        >
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+
+                <h3 class="text-lg leading-6 font-medium text-gray-900"
+                    id="modal-title">
+                  ADD A EXPERIENCE
+                </h3>
+                <div class="mt-2 w-full">
+                    <label for="email-address-icon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
+                    <div class="relative w-full">
+
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <i class="fas fa-building"></i>
+                        </div>
+
+                        <input type="text" id="email-address-icon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com">
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
   </div>
 </template>
 
@@ -155,6 +199,8 @@ export default {
         const skills = ref('')
         const SkillsArray = ref([])
         const updateData = ref('')
+        const isOpen = ref('')
+
         const { error, data, loadData, isLoading } = queryData('EmployeeDetails')
         loadData()
 
@@ -164,9 +210,9 @@ export default {
             await loadData()
             
             updateData.value = data.value.map((newData) => {
-                const { deleteDoc,updateDoc } = useDocument('EmployeeDetails',newData.id)
+                const { deleteDoc,updateDoc,AddSkills } = useDocument('EmployeeDetails',newData.id)
 
-                return { deleteDoc,updateDoc }
+                return { deleteDoc,updateDoc,AddSkills }
             })
         }
         fetchData()
@@ -189,8 +235,10 @@ export default {
         }
 
         // UPDATE SKILLS
-        const updateSkills = async () => {
-            await updateData.value[0].updateDoc({skills:SkillsArray.value})
+        const updateSkills = () => {
+            SkillsArray.value.map((skill) => {
+                updateData.value[0].AddSkills(skill)
+            })
         }
         
         const dataObject = {
@@ -201,7 +249,8 @@ export default {
             SkillsArray,
             skills,
             isLoading,
-            updateSkills
+            updateSkills,
+            isOpen
         }
 
         return dataObject

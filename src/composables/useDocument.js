@@ -1,9 +1,14 @@
 import { projectFirestore } from "@/firebase/config";
 import { ref } from "vue";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import { useRouter } from "vue-router";
+
 
 const useDocument = (collection,id) => {
     const error = ref(null)
     const isLoading = ref(false)
+    const router =  useRouter()
 
     let docRef = projectFirestore.collection(collection).doc(id)
 
@@ -37,8 +42,21 @@ const useDocument = (collection,id) => {
         }
     }
 
+    const AddSkills = async (array) => {
+        try {
+            await docRef.update({
+                skills: firebase.firestore.FieldValue.arrayUnion(array)
+            });
+            
+        } catch (err) {
+            error.value = err
+        }
 
-    return {error,isLoading,deleteDoc,updateDoc}
+        if(!error) router.push({name:'mylistng'})
+    };
+
+
+    return {error,isLoading,deleteDoc,updateDoc,AddSkills}
 }
 
 
