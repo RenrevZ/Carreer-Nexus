@@ -139,60 +139,111 @@
         </div>
     </div>
   </div>
+  <!-- MODAL -->
+<Modal :isOpen="isOpen">
+        <!-- TITLE -->
+        <template #title>
+            ADD A EXPERIENCE
+        </template>
 
-  <div
-      v-if="isOpen"
-      class="fixed inset-0 z-10 overflow-y-auto"
-      aria-modal="true"
-      role="dialog"
-      aria-labelledby="modal-title"
-      @keydown.escape="isOpen = false"
-    >
-      <div class="flex items-center justify-center min-h-screen">
-        <div
-          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-          aria-hidden="true"
-        ></div>
+        <!-- BODY -->
+        <template #body>
 
-        <div
-          class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full"
-          role="document"
-        >
-          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div class="sm:flex sm:items-start">
-              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-
-                <h3 class="text-lg leading-6 font-medium text-gray-900"
-                    id="modal-title">
-                  ADD A EXPERIENCE
-                </h3>
-                <div class="mt-2 w-full">
-                    <label for="email-address-icon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
-                    <div class="relative w-full">
-
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <i class="fas fa-building"></i>
-                        </div>
-
-                        <input type="text" id="email-address-icon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com">
+            <!-- IMAGE UPLOAD -->
+            <div class="flex justify-start">
+                <div class="flex flex-col justify-start items-start w-full mb-5">
+                    <div class="w-36 h-36 mb-3 rounded-full border-2 border-gray-400 overflow-hidden">
+                        <img ref="preview" 
+                            class="w-full h-full object-cover object-center" 
+                            :src="imageUrl" alt="preview" />
                     </div>
+                
+                    <input type="file"
+                        class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-600 file:text-white hover:file:bg-teal-800"
+                        accept="image/*"
+                        ref="imageToUpload"
+                        @change="previewImage" />
                 </div>
-              </div>
-            </div>
-          </div>
 
-        </div>
-      </div>
-  </div>
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
+                    <input type="text" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           placeholder="e.g Google"
+                           v-model="company"
+                           required>
+
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Position</label>
+                    <input type="text" 
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           placeholder="e.g Web Developer"
+                           v-model="position"
+                           required>
+                </div>
+            </div>
+
+            <div class="mb-5 w-full">
+                    <input type="checkbox" 
+                           v-model="employed"
+                           class="w-4 mr-4 mt-3 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label>im currently employed here</label>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div class="mb-3">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Date Started
+                    </label>
+                    <input type="date" 
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           placeholder="John"
+                           v-model="dateStarted"
+                           required>
+                </div>
+
+                <div v-if="!employed"
+                     class="mb-3">
+                    <label for="last_name" 
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                           Date Leave
+                    </label>
+                    <input type="date"
+                           v-model="dateLeave"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required>
+                </div>
+            </div>
+            
+            <div class="w-full">
+                <span v-if="Loading">
+                    <button @click="addExperience" 
+                        class="w-full bg-teal-500 text-white p-2 shadow rounded-full cursor-pointer" >
+                        Adding....
+                    </button>
+                </span>
+                <span v-else>
+                    <button @click="addExperience" 
+                        class="w-full bg-teal-700 text-white p-2 shadow rounded-full cursor-pointer" >
+                        Add Experience
+                    </button>
+                </span>
+            </div>
+        </template>
+</Modal>
+
 </template>
 
 <script>
 import queryData from '@/composables/queryData'
 import LoadingAnimate from './LoadingAnimate.vue'
 import useDocument from '@/composables/useDocument'
+import useData from '@/composables/useData'
+import Modal from './Modal.vue'
+import getUser from '@/composables/getUser'
+import Storage from '@/composables/Storage'
 import { ref } from 'vue'
+
 export default {
-    components: {LoadingAnimate},
+    components: {LoadingAnimate,Modal},
     setup(){
         // INPUTS
         const showInput = ref(false)
@@ -200,6 +251,73 @@ export default {
         const SkillsArray = ref([])
         const updateData = ref('')
         const isOpen = ref('')
+        const Loading = ref('')
+
+        // COMPOSABLES
+        const { addDoc } = useData('EmployeeExperience')
+        const { currentUser } = getUser()
+        const {url,filePath,uploadImage} = Storage()
+        
+        
+        // IMAGE UPLOAD
+        const imageToUpload = ref('')
+        const filetype = ['image/png','image/jpeg']
+        const fileError = ref(null)
+        const image = ref('')
+
+        // PREVIEW IMAGE
+        const imageUrl = ref("https://via.placeholder.com/150");
+        const previewImage = (event) => {
+            const file = event.target.files[0];
+            image.value = file 
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                imageUrl.value = reader.result;
+            }, false);
+            
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+
+            if(file && filetype.includes(file.type)){
+                imageToUpload.value = file
+                fileError.value = null
+            }else{
+                imageToUpload.value = null
+                fileError.value = 'Please select an image file (png/jpg)'
+            }
+        }
+
+        // ADD EXPERIENCE INPUT
+        const company = ref('')
+        const position = ref('')
+        const dateStarted = ref('')
+        const employed = ref(false)
+        const dateLeave = ref('')
+
+        // ADD EXPERIENCE FUNCTION
+        const addExperience = async () => {
+          try{
+            Loading.value = true
+            await uploadImage(image.value)
+            await addDoc({
+                company:company.value,
+                position:position.value,
+                dateStarted:dateStarted.value,
+                dateLeave:dateLeave.value,
+                isCurrent:employed.value,
+                user : currentUser.value.uid,
+                coverUrl: url.value,
+                filePath: filePath.value
+            })
+          }catch(err){
+             console.log(err)
+          }
+      
+          Loading.value = false
+          isOpen.value = false
+        }
+
 
         const { error, data, loadData, isLoading } = queryData('EmployeeDetails')
         loadData()
@@ -216,7 +334,7 @@ export default {
             })
         }
         fetchData()
-        console.log(updateData)
+  
         // FOR PUSHING IN ARRAY FUNCTION
         const itemValue = (variableValue,array) => {
                 if(variableValue != ''){
@@ -250,7 +368,19 @@ export default {
             skills,
             isLoading,
             updateSkills,
-            isOpen
+            isOpen,
+            imageToUpload,
+            previewImage,
+            imageUrl,
+            employed,
+            addExperience,
+            company,
+            position,
+            dateStarted,
+            dateLeave,
+            error,
+            isLoading,
+            Loading
         }
 
         return dataObject

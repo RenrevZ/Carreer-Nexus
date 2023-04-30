@@ -7,7 +7,7 @@
             <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 text-2xl">Carreer Nexus</span>
         </div>
 
-        <div class="center hidden md:block">
+        <!-- <div class="center hidden md:block">
             <ul class="flex justify-between items-center">
                 <li class="mr-5">
                     <router-link :to="{ name : 'Home'}">
@@ -21,7 +21,7 @@
                     </router-link>
                 </li>
             </ul>
-        </div>
+        </div> -->
 
         <div class="right hidden md:block" v-if="!currentUser">
             <button @click="SignupModaltoggle" type="button" class="text-white shadow bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -33,29 +33,40 @@
         </div>
 
         <div v-else class="flex justify-around items-center">
+            <router-link :to="{ name : 'Home'}"
+                         class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200">
+                        <i class="fa-solid fa-house text-slate-500 text-1xl"></i>
+            </router-link>
+
+            <router-link :to="{ name : 'JobList'}"
+                         class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200">
+                        
+                        <i class="fa-solid fa-briefcase text-slate-500 text-1xl"></i>
+            </router-link>
+
             <router-link :to="{name:'postJob'}" 
                           class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200"
                           data-tooltip-target="Post a Job">
-                <i class="fa-solid fa-table-list text-2xl text-slate-400 hover:text-teal-500"></i>
+                <i class="fa-solid fa-table-list text-1xl text-slate-500 hover:text-teal-500"></i>
             </router-link>
 
             <router-link :to="{name:'mylistng'}" 
                          class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200"
                          data-tooltip-target="User Profile">
-                  <i class="fa-solid fa-user text-xl text-slate-400 hover:text-teal-500"></i>
+                  <i class="fa-solid fa-user text-1xl text-slate-500 hover:text-teal-500"></i>
             </router-link>
 
 
             <!-- <h3 class="p-2">Hi there, {{ user.displayName }}</h3> -->
-            <button @click="Logout" type="button" class="text-white shadow bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Logout
-            </button>
+            <i class="fa-solid fa-arrow-right-from-bracket px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200 text-1xl text-slate-500" 
+               @click="Logout"></i>
+           
         </div>
 
         <div class="md:hidden block">
-            <button>
+            <!-- <button>
                 <i class="fa-solid fa-bars text-2xl"></i>
-            </button>
+            </button> -->
         </div>
     </div>
 </nav>

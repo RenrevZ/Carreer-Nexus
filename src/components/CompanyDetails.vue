@@ -125,10 +125,12 @@ export default {
         const imageToUpload = ref('')
         const fileError = ref(null)
         const filetype = ['image/png','image/jpeg']
+        const image = ref('')
         // PREVIEW IMAGE
         const imageUrl = ref("https://via.placeholder.com/150");
         const previewImage = (event) => {
             const file = event.target.files[0];
+            image.value = file
             const reader = new FileReader();
             reader.addEventListener("load", () => {
                 imageUrl.value = reader.result;
@@ -147,7 +149,7 @@ export default {
         }
 
         const createCompany = async () => {
-            await uploadImage(imageToUpload.value)
+            await uploadImage(image.value)
             await addDoc({
                 companyName : companyName.value,
                 companyLocation : companyLocation.value,

@@ -212,36 +212,7 @@ export default {
         const {url,filePath,uploadImage} = Storage()
         const imageToUpload = ref('')
         const fileError = ref(null)
-
-        const showError = (input) => {
-            let error = ''
-            if(input == ''){
-                error = `error! ${input} field is required`
-            }
-
-            return error
-        }
-
-        
-        const createProfile = async () => {
-                await uploadImage(imageToUpload.value)
-                await addDoc({
-                    firstName: firstName.value,
-                    middleName : middleName.value,
-                    lastName : lastName.value,
-                    address : address.value,
-                    Age : Age.value,
-                    Gender : Gender.value,
-                    Company : Company.value,
-                    CompanyAddress : CompanyAddress.value,
-                    WorkExp : WorkExp.value,
-                    DateLeave : DateLeave.value,
-                    user : currentUser.value.uid,
-                    coverUrl: url.value,
-                    filePath: filePath.value,
-                })
-              router.push({name:'mylistng'})
-        }
+        const image = ref('')
 
         const filetype = ['image/png','image/jpeg']
 
@@ -249,6 +220,7 @@ export default {
         const imageUrl = ref("https://via.placeholder.com/150");
         const previewImage = (event) => {
             const file = event.target.files[0];
+            image.value = file
             const reader = new FileReader();
             reader.addEventListener("load", () => {
                 imageUrl.value = reader.result;
@@ -267,6 +239,38 @@ export default {
             }
         }
 
+
+        const showError = (input) => {
+            let error = ''
+            if(input == ''){
+                error = `error! ${input} field is required`
+            }
+
+            return error
+        }
+
+        
+        const createProfile = async () => {
+                await uploadImage(image.value)
+                await addDoc({
+                    firstName: firstName.value,
+                    middleName : middleName.value,
+                    lastName : lastName.value,
+                    address : address.value,
+                    Age : Age.value,
+                    Gender : Gender.value,
+                    Company : Company.value,
+                    CompanyAddress : CompanyAddress.value,
+                    WorkExp : WorkExp.value,
+                    DateLeave : DateLeave.value,
+                    user : currentUser.value.uid,
+                    coverUrl: url.value,
+                    filePath: filePath.value,
+                })
+              router.push({name:'mylistng'})
+        }
+
+        
         const dataObject = {
             createProfile,
             firstName,
