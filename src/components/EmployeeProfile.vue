@@ -28,22 +28,41 @@
                     <div class="flex justify-center items-center">
                         <h1 class="text-1xl font-bold text-center mb-3 mr-1">Skills</h1>
                         <i class="fa-regular fa-pen-to-square text-slate-600 text-1xl cursor-pointer mb-5"
-                        @click="EditInfo"></i>
+                        @click="showupdateSkill = !showupdateSkill"></i>
                     </div>
                     
-                    <div class="grid grid-cols-3 gap-5 mb-6">
-                        <!-- <span v-for="skill in creds.skills" :key="skill">
-                            <span class="rounded-full bg-sky-400 text-slate-100 px-5 py-2 whitespace-nowrap">
-                              {{ skill }}
+                    <div>
+                        <span v-if="!showupdateSkill" class="grid grid-cols-3 gap-5 mb-6">
+                             <span v-for="skill in creds.skills" :key="skill">
+                                <div class="flex items-center justify-around bg-sky-400 rounded-full px-3 py-1 whitespace-nowrap">
+                                    <span class="text-slate-100">{{ skill }}</span>
+                                </div>
+                             </span>
+                        </span>
+                        <span v-else class="grid grid-cols-1 gap-5 mb-6">
+                           <span class="grid grid-cols-3 gap-5 mb-6">
+                                <span v-for="skill in creds.skills" :key="skill">
+                                    <div class="flex items-center justify-around bg-sky-400 rounded-full px-3 py-1 whitespace-nowrap">
+                                    <span class="text-slate-100">{{ skill }}</span>
+                                    <button @click="removeSkill(skill)" class="text-red-500 font-bold hover:text-red-700">
+                                    x
+                                    </button>
+                                    </div>
+                                </span>
                             </span>
-                        </span> -->
-                        <span v-for="skill in creds.skills" :key="skill">
-                            <div class="flex items-center justify-around bg-sky-400 rounded-full px-3 py-1 whitespace-nowrap">
-                            <span class="text-slate-100">{{ skill }}</span>
-                            <button @click="removeSkill(skill)" class="text-red-500 font-bold hover:text-red-700">
-                               x
-                            </button>
-                            </div>
+                            <span v-if="!Loading">
+                                <button @click="updateSkill" 
+                                    class="w-full bg-sky-500 text-white p-2 shadow rounded-full cursor-pointer" >
+                                    Update Skills
+                                </button>
+                            </span>
+                            <span v-else>
+                                <button @click="updateSkill" 
+                                    class="w-full bg-sky-500 text-white p-2 shadow rounded-full cursor-pointer"
+                                    disabled>
+                                    Updating......
+                                </button>
+                            </span>
                         </span>
                     </div>
                     
@@ -611,15 +630,35 @@ export default {
         loadXp()
 
         // REMOVE SKILL
+        const showupdateSkill = ref('')
         const skillToremove = ref([])
         const newSkill = ref([])
         const removeSkill = (skill) => {
             skillToremove.value.push(skill)
             
-           newSkill.value = data.value.filter((NewSkill) => {
-                return !NewSkill.skills.some((s) => skillToremove.value.includes(s))
+            newSkill.value = data.value.map((NewSkill) => {
+                NewSkill.skills = NewSkill.skills.filter(s => !skillToremove.value.includes(s))
+                return NewSkill
             })
-            console.log(newSkill.value)
+        }
+        // UPDATE SKILL
+        const updatedSkill = ref([])
+        const updateSkill = async () => {
+            updatedSkill.value = data.value.map((NewSkill) => {
+                NewSkill.skills = NewSkill.skills.filter(s => !skillToremove.value.includes(s))
+                return NewSkill.skills
+            })
+            
+            try {
+                Loading.value = true
+                await updateData.value[0].updateDoc({ 
+                    skills : updatedSkill.value[0]
+                })
+            } catch (error) {
+                console.log(error)
+            }
+            Loading.value = false
+            location.reload()
         }
         
         const dataObject = {
@@ -662,7 +701,9 @@ export default {
             eAddress,
             UpdateBasicInfo,
             dataXp,
-            removeSkill
+            removeSkill,
+            showupdateSkill,
+            updateSkill
         }
 
         return dataObject
