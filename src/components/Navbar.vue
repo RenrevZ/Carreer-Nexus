@@ -1,10 +1,10 @@
 <template>
   
 <nav class="bg-white shadow p-2 sticky top-0">
-    <div class="flex justify-around items-center">
+    <div class="flex md:justify-around justify-between items-center">
         <div class="left flex">
             <img src="@/assets/img/1930254_green_triforce_zelda_icon.png" alt="" class="icon">
-            <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 text-2xl">Carreer Nexus</span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 text-2xl md:block hidden">Carreer Nexus</span>
         </div>
 
         <!-- <div class="center hidden md:block">
@@ -32,7 +32,7 @@
             </button>
         </div>
 
-        <div v-else class="flex justify-around items-center">
+        <div v-else class="flex justify-start items-center">
             <router-link :to="{ name : 'Home'}"
                          class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200">
                         <i class="fa-solid fa-house text-slate-500 text-1xl"></i>

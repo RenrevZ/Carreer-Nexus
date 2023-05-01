@@ -9,8 +9,12 @@
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 <span class="sr-only">Close modal</span>
             </button>
-            <div class="px-6 py-6 lg:px-8">
-                <h3 class="mb-4 text-3xl font-medium text-gray-900 dark:text-white">Sign up</h3>
+
+            <span class="flex justify-center items-center w-full ">
+                         <img src="@/assets/img/1930254_green_triforce_zelda_icon.png" alt="" class="head">
+            </span>
+            <div class="px-6 pb-5 lg:px-8">
+                <h3 class="mb-4 text-2xl font-bold text-gray-600 dark:text-white">Sign up</h3>
                 <!-- === FORM ===== -->
                 <form @submit.prevent class="space-y-3">
 
@@ -133,5 +137,9 @@ export default {
 }
 .slide-down-enter, .slide-down-leave-to {
   transform: translateY(-100%);
+}
+.head{
+    height: 70px;
+    margin-top: 10px;
 }
 </style>

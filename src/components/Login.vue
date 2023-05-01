@@ -11,9 +11,13 @@
                 <span class="sr-only">Close modal</span>
             </button>
                 <div class="px-6 py-6 lg:px-8">
+                    <span class="flex justify-center items-center w-full ">
+                         <img src="@/assets/img/1930254_green_triforce_zelda_icon.png" alt="" class="head">
+                    </span>
+                   
                     <small class="text-lg text-rose-600" v-if="showLoginfirst">You have to login first</small>
 
-                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Login</h3>
+                    <h3 class="mb-4 text-2xl font-bold text-gray-600 dark:text-white">Login</h3>
                     <form class="space-y-6" @submit.prevent="loginUser">
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
@@ -98,5 +102,10 @@ export default {
 }
 .slide-down-enter, .slide-down-leave-to {
     transform: translateY(-100%);
+}
+
+.head{
+    height: 70px;
+    margin-bottom: 10px;
 }
 </style>

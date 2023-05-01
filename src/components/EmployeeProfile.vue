@@ -1,33 +1,52 @@
 <template>
   <div class="flex flex-col justify-center items-center h-full w-full">
-    <div class="grid grid-col-1 md:grid-rows-3 grid-flow-col gap-4">
-        <div class="row-span-3 flex flex-col justify-start items-center shadow-lg p-10 max-w-md">
+    <div class="grid grid-col-1 md:grid-rows-3 md:grid-flow-col md:gap-4 my-10 mt-24">
+        <div class="row-span-3 flex flex-col justify-start items-center shadow-lg p-10 md:max-w-md mx-auto">
             <div v-for="creds in credential" :key="creds">
+                <!-- PROFILE IMAGE -->
                 <span v-if="!isLoading" class="relative w-full">
                     <img src="https://i.pinimg.com/564x/ef/cb/5a/efcb5aff8710f5fb321065027cb149b2.jpg" class="rounded-full h-32 object-cover mx-auto">
                     <span class="bottom-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
                 </span>
-               
-                <h1 class="text-2xl font-bold text-center text-sky-600 mt-8">
-                    {{ creds.firstName }}   {{ creds.middleName }} {{ creds.lastName }}
-                </h1>
-                <p class="mt-2 text-md text-gray-600 text-center">{{ creds.Company }}</p>
-                <p class="text-sm py-10">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Earum ullam amet aut consequatur quo odio nisi excepturi 
-                    nostrum sequi! Consequuntur aliquam expedita quaerat? Veniam odio 
-                    nulla esse omnis, non obcaecati.
-                </p>
+                
+                    <div class="flex justify-center items-center">
+                        <h1 class="text-2xl font-bold text-center text-sky-600 mt-8">
+                            {{ creds.firstName }}   {{ creds.middleName }} {{ creds.lastName }}
+                        </h1>
+                        <i class="fa-regular fa-pen-to-square text-slate-600 text-1xl cursor-pointer"
+                        @click="EditInfo"></i>
+                    </div>
 
-                <div class="flex flex-col justify-start items-start">
-                    <h1 class="text-1xl font-bold text-center mb-3">Skills</h1>
+                    <p class="mt-2 text-md text-gray-600 text-center">{{ creds.position }}</p>
+                
+                    <p class="text-sm py-10">
+                        {{ creds.bio }}
+                    </p>
+            
+                <!-- SKILLS -->
+                <div class="flex flex-col justify-center items-center">
+                    <div class="flex justify-center items-center">
+                        <h1 class="text-1xl font-bold text-center mb-3 mr-1">Skills</h1>
+                        <i class="fa-regular fa-pen-to-square text-slate-600 text-1xl cursor-pointer mb-5"
+                        @click="EditInfo"></i>
+                    </div>
+                    
                     <div class="grid grid-cols-3 gap-5 mb-6">
-                        <span v-for="skill in creds.skills" :key="skill">
+                        <!-- <span v-for="skill in creds.skills" :key="skill">
                             <span class="rounded-full bg-sky-400 text-slate-100 px-5 py-2 whitespace-nowrap">
                               {{ skill }}
                             </span>
+                        </span> -->
+                        <span v-for="skill in creds.skills" :key="skill">
+                            <div class="flex items-center justify-around bg-sky-400 rounded-full px-3 py-1 whitespace-nowrap">
+                            <span class="text-slate-100">{{ skill }}</span>
+                            <button @click="removeSkill(skill)" class="text-red-500 font-bold hover:text-red-700">
+                               x
+                            </button>
+                            </div>
                         </span>
                     </div>
+                    
                      
                     <div class="flex flex-col justify-start items-start w-full">
                         <span v-if="showInput" class="w-full">
@@ -42,7 +61,8 @@
                                required
                                placeholder="Add Skills"
                               />
-
+                             
+                              <!-- ADD SKILLS -->
                               <span v-if="SkillsArray" class="w-full">
                                     <span v-for="skills in SkillsArray" :key="skills" class="grid grid-cols-2 mb-3 w-full">
                                         <span class="rounded-full bg-sky-400 text-slate-100 px-5 py-2 text-center">
@@ -67,9 +87,15 @@
             </div>
         </div>
 
-        <div class="col-span-8 shadow-md p-10  basic-info-container">
-            <h1 class="text-1xl font-bold text-center">Basic Information</h1>
-            <div v-for="creds in credential" :key="creds" class="grid grid-cols-3 gap-2">
+        <!-- BASIC INFORMATION -->
+        <div class="col-span-8 shadow-md p-5 mt-10  basic-info-container mx-auto">
+            <h1 class="text-1xl font-bold text-center">
+                Basic Information
+                <i class="fa-regular fa-pen-to-square text-slate-600 text-1xl cursor-pointer"
+                        @click="EditBasicInfo"></i>
+            </h1>
+            
+            <div v-for="creds in credential" :key="creds" class="grid md:grid-cols-3 grid-cols-2 gap-2 mb-4">
                 <div>
                     <h1 class="text-md font-semibold text-slate-500 dark:text-white p-2">
                         Age
@@ -81,55 +107,63 @@
                     <h1 class="text-md font-semibold text-slate-500 dark:text-white p-2">
                         Years of Experience
                     </h1>
-                    <p>{{ creds.WorkExp}}</p>
+                    <p>{{ creds.YearsOfXp}}</p>
                 </div>
 
                 <div>
                     <h1 class="text-md font-semibold text-slate-500 dark:text-white p-2">
                         Phone
                     </h1>
-                    <p>+639454357210</p>
+                    <p>{{ creds.Phone }}</p>
                 </div>
             </div>
 
-            <div v-for="creds in credential" :key="creds" class="grid grid-cols-3 gap-2">
+            <div v-for="creds in credential" :key="creds" class="grid md:grid-cols-3 grid-cols-2 gap-2">
                 <div>
                     <h1 class="text-md font-semibold text-slate-500 dark:text-white p-2">
                         Email
                     </h1>
-                    <p>{{ creds.Age}}</p>
+                    <p>{{ creds.Email}}</p>
                 </div>
 
                 <div>
                     <h1 class="text-md font-semibold text-slate-500 dark:text-white p-2">
                         Educational Attainment
                     </h1>
-                    <p>{{ creds.WorkExp}}</p>
+                    <p>{{ creds.EducationalAttainment}}</p>
                 </div>
 
                 <div>
                     <h1 class="text-md font-semibold text-slate-500 dark:text-white p-2">
                         Address
                     </h1>
-                    <p>+639454357210</p>
+                    <p>{{ creds.Address }}</p>
                 </div>
-
             </div>
         </div>
 
 
-        <div class="row-span-2 col-span-8  shadow-md p-10 w-full">
+        <div class="row-span-2 col-span-8  shadow-md p-10 w-full mx-auto max-h-lg">
             <h1 class="text-1xl font-bold text-center mb-5">Experience</h1>
-            <div class="flex justify-around items-center border-b border-slate-300 py-5">
-                <img src="https://www.jimac-inc.com/wp-content/themes/jimacv2theme/assets/img/jimac-logo.png" 
-                     class="rounded-full h-20 w-16 object-cover">
 
-                <div class="flex flex-col justify-start items-center">
-                    <h1 class="text-sky-600 text-2xl">Jimac Inc</h1>
-                    <h3 class="text-slate-600 text-xl">Web Application Developer</h3>
-                    <small>August 8 - Present | Quezon Ave,Quezon City</small>
+            <span v-for="Xp in dataXp" :key="Xp">
+                <div class="flex justify-around items-center border-b border-slate-300 py-5">
+                    <img :src="Xp.coverUrl" 
+                        class="rounded-full h-20 w-16 object-cover">
+
+                    <div class="flex flex-col justify-start items-center">
+                        <h1 class="text-sky-600 text-2xl">{{ Xp.company }}</h1>
+                        <h3 class="text-slate-600 text-xl">{{ Xp.position }}</h3>
+                        <span v-if="isCurrent = true">
+                            <small>{{ Xp.dateStarted }} - Present | Quezon Ave,Quezon City</small>
+                        </span>
+                        <span v-else>
+                            <small>{{ Xp.dateStarted }} - {{ Xp.dateLeave }} | Quezon Ave,Quezon City</small>
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </span>
+            
 
             <div class="flex justify-start items-start">
                 <i class="fa-solid fa-circle-plus text-sky-800 text-2xl cursor-pointer pt-5"
@@ -139,7 +173,8 @@
         </div>
     </div>
   </div>
-  <!-- MODAL -->
+
+<!-- ADD EXPERIENCE MODAL -->
 <Modal :isOpen="isOpen">
         <!-- TITLE -->
         <template #title>
@@ -230,8 +265,166 @@
         </template>
 </Modal>
 
-</template>
+<!--  EDIT INFO MODAL -->
+<Modal :isOpen="showEdit">
+        <!-- TITLE -->
+        <template #title>
+            UPDATE PROFILE
+        </template>
 
+        <!-- BODY -->
+        <template #body>
+            <!-- IMAGE UPLOAD -->
+            <div class="grid grid-cols-3 gap-3">
+
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                    <input type="text" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           placeholder="e.g Harvy"
+                           v-model="eFirstName"
+                           required>
+                </div>
+
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
+                    <input type="text" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           placeholder="e.g M"
+                           v-model="eMiddleName"
+                           required>
+                </div>
+
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                    <input type="text" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           placeholder="e.g Gascon"
+                           v-model="eLastName"
+                           required>
+                </div>
+            </div>
+
+            <div class="w-full">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Position</label>
+                    <input type="text" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           placeholder="e.g Web Application Developer"
+                           v-model="ePosition"
+                           required>
+            </div>
+
+            <div class="w-full">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Bio
+                </label>
+                <textarea rows="5" 
+                          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                          placeholder="Place bio here..."
+                          v-model="ebio"
+                          style="resize:none;"></textarea>
+            </div>
+
+            <div class="w-full mt-5">
+                <span v-if="Loading">
+                    <button @click="UpdateProfile" 
+                            class="w-full bg-teal-300 text-white p-2 shadow rounded-full cursor-pointer"
+                            disabled>
+                            Updating.....
+                    </button>
+                </span>
+                <span v-else>
+                    <button @click="UpdateProfile" 
+                            class="w-full bg-teal-500 text-white p-2 shadow rounded-full cursor-pointer" >
+                            Update Profile
+                    </button>
+                </span>
+            </div>
+        </template>
+</Modal>
+
+<!--  EDIT BASIC INFO MODAL -->
+<Modal :isOpen="showBasicInfo">
+        <!-- TITLE -->
+        <template #title>
+            UPDATE BASIC INFORMATION
+        </template>
+
+        <!-- BODY -->
+        <template #body>
+            <!-- IMAGE UPLOAD -->
+            <div class="grid grid-cols-3 gap-3">
+
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
+                    <input type="number" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           v-model="eAge"
+                           required>
+                </div>
+
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Years of Experience</label>
+                    <input type="text" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           v-model="eYearsXp"
+                           required>
+                </div>
+
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
+                    <input type="text" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           v-model="ePhone"
+                           required>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <input type="email" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           v-model="eEmail"
+                           required>
+                </div>
+
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Educational Attainment</label>
+                    <input type="text" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           v-model="eEducationalAttain"
+                           required>
+                </div>
+
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
+                    <input type="text" 
+                           class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           v-model="eAddress"
+                           required>
+                </div>
+            </div>
+
+            <div class="w-full mt-5">
+                <span v-if="Loading">
+                    <button @click="UpdateBasicInfo" 
+                            class="w-full bg-teal-300 text-white p-2 shadow rounded-full cursor-pointer"
+                            disabled>
+                            Updating.....
+                    </button>
+                </span>
+                <span v-else>
+                    <button @click="UpdateBasicInfo" 
+                            class="w-full bg-teal-500 text-white p-2 shadow rounded-full cursor-pointer" >
+                            Update Basic Information
+                    </button>
+                </span>
+            </div>
+        </template>
+</Modal>
+
+</template>
 <script>
 import queryData from '@/composables/queryData'
 import LoadingAnimate from './LoadingAnimate.vue'
@@ -358,9 +551,79 @@ export default {
                 updateData.value[0].AddSkills(skill)
             })
         }
+
+        // EDIT PROFILE
+        const showEdit = ref(false)
+        const eFirstName = ref('')
+        const eMiddleName = ref('')
+        const eLastName = ref('')
+        const ePosition = ref('')
+        const ebio = ref('')
+        const EditInfo = () => showEdit.value = true
+        // SUBMIT
+        const UpdateProfile = async () => {
+           try {
+            Loading.value = true
+             await updateData.value[0].updateDoc({ 
+                firstName:eFirstName.value,
+                middleName:eMiddleName.value,
+                lastName:eLastName.value,
+                position:ePosition.value,
+                bio:ebio.value
+             })
+           } catch (error) {
+                console.log(error)
+           }
+           Loading.value = false
+           showEdit.value = false
+        }
+
+        // EDIT BASIC INFO
+        const showBasicInfo = ref(false)
+        const eAge = ref('')
+        const eYearsXp = ref('')
+        const ePhone = ref('')
+        const eEmail = ref('')
+        const eEducationalAttain = ref('')
+        const eAddress = ref('')
+        const EditBasicInfo = () => showBasicInfo.value = true
+        // SUBMIT
+        const UpdateBasicInfo = async () => {
+            try {
+                Loading.value = true
+                await updateData.value[0].updateDoc({ 
+                    Age:eAge.value,
+                    YearsOfXp:eYearsXp.value,
+                    Phone:ePhone.value,
+                    Email:eEmail.value,
+                    EducationalAttainment:eEducationalAttain.value,
+                    Address:eAddress.value
+                })
+           } catch (error) {
+                console.log(error)
+           }
+           Loading.value = false
+           showBasicInfo.value = false
+        }
+
+        // GET EXPERIENCE
+        const {  data:dataXp, loadData:loadXp } = queryData('EmployeeExperience')
+        loadXp()
+
+        // REMOVE SKILL
+        const skillToremove = ref([])
+        const newSkill = ref([])
+        const removeSkill = (skill) => {
+            skillToremove.value.push(skill)
+            
+           newSkill.value = data.value.filter((NewSkill) => {
+                return !NewSkill.skills.some((s) => skillToremove.value.includes(s))
+            })
+            console.log(newSkill.value)
+        }
         
         const dataObject = {
-            credential:data,
+            credential:newSkill.value != '' ? newSkill : data,
             AddSkills,
             showInput,
             skillsInput,
@@ -380,7 +643,26 @@ export default {
             dateLeave,
             error,
             isLoading,
-            Loading
+            Loading,
+            EditInfo,
+            showEdit,
+            showBasicInfo,
+            EditBasicInfo,
+            UpdateProfile,
+            eFirstName,
+            eMiddleName,
+            eLastName,
+            ePosition,
+            ebio,
+            eAge,
+            eYearsXp,
+            ePhone,
+            eEmail,
+            eEducationalAttain,
+            eAddress,
+            UpdateBasicInfo,
+            dataXp,
+            removeSkill
         }
 
         return dataObject

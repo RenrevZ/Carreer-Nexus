@@ -48,5 +48,25 @@ export default {
 </script>
 
 <style>
+.modal-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
 
+.modal-enter-active {
+  transition: all 0.2s ease-out;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-leave {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-leave-active {
+  transition: all 0.2s ease-out;
+  opacity: 0;
+  transform: scale(0.9);
+}
 </style>
