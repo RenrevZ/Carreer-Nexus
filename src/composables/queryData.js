@@ -32,7 +32,7 @@ const getData = (collectionName) => {
       console.log(err)
     }
   }
-
+  loadData()
   return { error, data, loadData,isLoading }
 }
 

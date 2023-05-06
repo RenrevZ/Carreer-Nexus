@@ -6,7 +6,7 @@
   <!-- SEARCH COMPONENT -->
 <Search @search-submit="onSearchSubmit"/>
 
-<!-- PAGINATION  -->
+<!-- PAGINATION 
 <div class="flex justify-end items-end mb-5">
   <div class="flex justify-between items-center mt-8 mr-10">
       <span class="text-gray-600">{{ currentPage }} out of {{ totalPages }}</span>
@@ -28,7 +28,7 @@
           <i class="fa-solid fa-angles-right"></i>
         </button>
   </div>
-</div>
+</div> -->
 
  <!-- ==== JOBS DATA === -->
  <div v-if="!isLoading">
@@ -51,14 +51,15 @@
 import Search from '@/components/Search'
 import Jobs from '@/components/Jobs.vue'
 import paginateData from '@/composables/paginateData'
+import getData from '@/composables/getData'
 import { inject } from 'vue';
 import CardLoading from '@/components/CardLoading.vue'
 
 export default {
     components: {Search,Jobs},
     setup(){
-        const {currentPageItems,currentPage,totalPages,nextPage,previousPage,jobs,loadData,isLoading } = paginateData()
-    
+        // const {currentPageItems,currentPage,totalPages,nextPage,previousPage,jobs,loadData,isLoading } = paginateData()
+      const { error, jobs , loadData,isLoading} = getData()
      //== SEARCH EVENT
     const provideSearch = inject('search')
     const onSearchSubmit = (event) => {
@@ -69,11 +70,11 @@ export default {
 
     //=== RETURN OBJECT
     const data_object =  {
-            currentPageItems,
-            currentPage,
-            totalPages,
-            nextPage,
-            previousPage,
+            // currentPageItems,
+            // currentPage,
+            // totalPages,
+            // nextPage,
+            // previousPage,
             jobs,
             onSearchSubmit,
             isLoading

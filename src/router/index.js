@@ -26,9 +26,9 @@ const routes = [
     props: true
   },
   {
-    path: '/mylisting',
+    path: '/Profile',
     name: 'mylistng',
-    component: () => import('../views/Mylisting'),
+    component: () => import('../views/Profile'),
     props: true
   },
   {

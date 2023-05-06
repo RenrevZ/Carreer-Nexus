@@ -55,7 +55,6 @@ const previousPage = () => {
       loadData()
 }
 
-    loadData()
 
 const paginateData = () => {
     return {

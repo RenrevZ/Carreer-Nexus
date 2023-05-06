@@ -1,9 +1,9 @@
 <template>
-<div class="md:grid grid-cols-2 gap-2">
+<div class="md:grid grid-cols-2 gap-2 mt-3">
 <div class="max-w-screen-xl max-h-100 p-6 mx-10 bg-white border border-teal-400 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <form>
         <h1 class="text-2xl font-extrabold tracking-tight text-slate-500 dark:text-white">
-            Create Job Listing
+            Post a job
         </h1>
 
         <!-- ==== POSTION ==== -->
@@ -59,14 +59,14 @@
                 <input type="text" 
                     name="floating_email" 
                     id="floating_email" 
-                    v-model="Experience" 
+                    v-model="salary" 
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
                     placeholder=" " 
                     required />
 
                 <label for="floating_email" 
                     class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                    Location
+                    Salary
                 </label>
             </div>
 
@@ -87,7 +87,7 @@
             </div>
         </div>
 
-        <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-16 py-1 shadow-md mb-10" role="alert">
+        <!-- <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-16 py-1 shadow-md mb-10" role="alert">
             <div class="flex">
                 <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
                 <div>
@@ -95,7 +95,13 @@
                 <p class="text-sm">you can rely on preview data on right for refference.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
+        <span class="flex justify-center items-center p-1 mb-1">
+            <div class="flex justify-around items-center">
+                <i class="fa-regular fa-bell p-1 text-slate-500"></i>
+                <p class="text-sm text-slate-500">Please use <b>Enter</b> key to add data.</p>
+            </div>
+        </span>
 
          <div class="first-row">
             <h6>Job Highlights</h6>
@@ -213,11 +219,9 @@
 <div class="left max-w-xl">
        <div class=" p-6 mb-6 bg-white border border-teal-400 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
          <div class="border-0 border-b border-gray-200 text-gray-900 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <div class="flex justify-around items-center">
+            <div class="flex justify-around items-start">
                <div class="left">
-                    <h5 class="text-lg font-extrabold tracking-tight text-slate-500 dark:text-white">
-                        <i class="fa-solid fa-note-sticky"></i> 
-
+                    <h5 class="text-lg font-extrabold tracking-tight text-sky-500 dark:text-white">
                         <span v-if="position" class="pl-5">
                              {{ position }}
                         </span>
@@ -228,35 +232,37 @@
                     </h5>
                </div>
              
-               <div class="right">
+               <!-- <div class="right">
                  <button class="text-white bg-slate-300 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                          disabled>
                     Apply now
                 </button>
-               </div>
+               </div> -->
             </div>
         </div>
 
     
-        <div class="flex flex-col items-start justify-start border-0 border-b border-gray-200 mb-4">
-            <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Job Description</h2>
+        <div class="flex flex-col items-start justify-center border-0 border-b border-gray-200 mb-4">
+            <h2 class="text-lg font-semibold text-slate-500 dark:text-white mb-10">Job Summary</h2>
             
                 <small class="text-sm font-bold text-gray-500 dark:text-white">
                     {{ JobDescription }}
                 </small> 
                 
-                <span v-if="JobDescription == ''">
-                    <h5 class="text-md font-bold tracking-tight text-slate-500 dark:text-white">
-                            No Job Description yet
-                    </h5> 
-                </span>
+                <div class="flex items-center justify-center">
+                    <span v-if="JobDescription == ''">
+                        <h6 class="text-sm tracking-tight text-slate-500 dark:text-white">
+                                No Job Description yet
+                        </h6> 
+                    </span>
+                </div>
          </div>
         
      
 
      
          <div class="flex flex-col items-start justify-start p-2 border-0 border-b border-gray-200 mb-5">
-            <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Job highlights</h2>
+            <h2 class="mb-10 text-lg font-semibold text-slate-500 dark:text-white">Job highlights</h2>
                 <ul class=" space-y-4 text-left text-gray-500 dark:text-gray-400">
             
                     <span v-if="Jharray">
@@ -277,7 +283,7 @@
                     </span>
 
                     <span v-if="limitHiglight == ''">
-                        <h5 class="text-md font-bold tracking-tight text-slate-500 dark:text-white">
+                        <h5 class="text-sm tracking-tight text-slate-500 dark:text-white">
                             No Job Higlight yet
                         </h5> 
                     </span>
@@ -285,7 +291,7 @@
         </div>
 
         <div class="flex flex-col items-start justify-start p-2 border-0 border-b border-gray-200 mb-4">    
-            <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Qualification</h2>
+            <h2 class="mb-10 text-lg font-semibold text-slate-500 dark:text-white">Qualification</h2>
                 <ul class="text-gray-500 list-disc list-outside dark:text-gray-400 pl-5">
                    
                     <span v-for="rarp in QualificationsArray" :key="rarp">
@@ -297,7 +303,7 @@
                     </span>
 
                     <span v-if="QualificationsArray == ''">
-                            <h5 class="text-md font-bold tracking-tight text-slate-500 dark:text-white">
+                            <h5 class="text-sm tracking-tight text-slate-500 dark:text-white">
                                 No Qualification added yet
                             </h5> 
                     </span>
@@ -305,7 +311,7 @@
           </div>
        
         <div class="flex flex-col items-start justify-start  border-0 border-b border-gray-200 mb-4">    
-        <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Roles And Resposibilities</h2>
+        <h2 class="mb-10 text-lg font-semibold text-slate-500 dark:text-white">Roles And Resposibilities</h2>
             <ul class="text-gray-500 list-disc list-outside dark:text-gray-400 pl-5">
 
                 <span>
@@ -319,7 +325,7 @@
                 </span>
 
                 <span v-if="RoleandResArray == ''">
-                    <h5 class="text-md font-bold tracking-tight text-slate-500 dark:text-white">
+                    <h5 class="text-sm tracking-tight text-slate-500 dark:text-white">
                         No Roles and Responsibilities yet
                     </h5> 
                 </span>
@@ -328,13 +334,13 @@
 
         <!-- ==== REQUIRED SKILLS ====  -->
           <div class="border-0 border-b border-gray-200 text-slate-800 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <h5 class="text-2xl font-extrabold tracking-tight text-slate-500 dark:text-white">
+                <h5 class="text-2xl font-extrabold tracking-tight text-slate-500 dark:text-white mb-2">
                     <i class="fa-regular fa-lightbulb"></i> Required Skills
                 </h5> 
           </div>
 
-          <span v-if="RequiredSkillsArray">
-                <span v-for="tags in RequiredSkillsArray" :key="tags" class="flex items-center justify-around max-w-xs p-2 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800">
+          <span v-if="RequiredSkillsArray" class="grid grid-cols-3 gap-2">
+                <span v-for="tags in RequiredSkillsArray" :key="tags" class="p-2 mb-2 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800">
                         {{ tags }}
                 </span>
           </span>
@@ -370,14 +376,17 @@ export default {
         const RoleandRes = ref('')
         const RequiredSkills = ref('')
         const Experience = ref('')
+        const salary = ref('')
         const Timeline = ref('')
         let Jharray = ref([])
         let QualificationsArray = ref([])
         let RoleandResArray = ref([])
         let RequiredSkillsArray = ref([])
+
+        // COMPOSABLES
         const {error, addDoc, isLoading} = useData('Jobs')
         const route = useRouter()
-        const { user } = getUser()
+        const { currentUser } = getUser()
         const maxCharsPerLine = ref(20)
         
         
@@ -437,14 +446,16 @@ export default {
         //=== ADDING EVERY DATA TO THE FIREBASE
         const postJob = async () => {
            await addDoc({
+                position:position.value,
                 JobDescription: JobDescription.value,
+                salary:salary.value,
                 JobHighlights: Jharray.value,
                 Qualifications: QualificationsArray.value,
                 RolesAnResposibilities: RoleandResArray.value,
                 tags: RequiredSkillsArray.value,
                 Timeline: Timeline.value,
                 Experience: Experience.value,
-                companyListed:user.value.uid
+                user:currentUser.value.uid
             })
 
             route.push({name:'JobList'})
@@ -471,6 +482,7 @@ export default {
             Experience,
             isLoading,
             Timeline,
+            salary,
             // word break every data
             DescriptionwordBreak
         }

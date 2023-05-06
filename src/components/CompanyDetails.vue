@@ -118,7 +118,7 @@ export default {
 
         //=== COMPOSABLES
         const { error, addDoc, isLoading} = useData('Company')
-        const { user } = getUser()
+        const { currentUser } = getUser()
 
         //=== IMAGE UPLOAD
         const {url,filePath,uploadImage} = Storage()
@@ -156,7 +156,7 @@ export default {
                 companySize : companySize.value,
                 industry : industry.value,
                 history : history.value,
-                user : user.value.uid,
+                user : currentUser.value.uid,
                 coverUrl: url.value,
                 filePath: filePath.value
             })

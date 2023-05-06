@@ -3,25 +3,12 @@
 <nav class="bg-white shadow p-2 sticky top-0">
     <div class="flex md:justify-around justify-between items-center">
         <div class="left flex">
-            <img src="@/assets/img/1930254_green_triforce_zelda_icon.png" alt="" class="icon">
+            <router-link :to="{ name : 'Home'}"
+                         class=" flex px-3 cursor-pointer">
+            <img src="@/assets/img/1930254_green_triforce_zelda_icon.png" alt="" class="icon mr-3">
             <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 text-2xl md:block hidden">Carreer Nexus</span>
+            </router-link>
         </div>
-
-        <!-- <div class="center hidden md:block">
-            <ul class="flex justify-between items-center">
-                <li class="mr-5">
-                    <router-link :to="{ name : 'Home'}">
-                        <i class="fa-solid fa-house"></i> Home
-                    </router-link>
-                </li>
-
-                <li class="mr-5">
-                    <router-link :to="{ name : 'JobList'}">
-                        <i class="fa-solid fa-briefcase"></i> Jobs
-                    </router-link>
-                </li>
-            </ul>
-        </div> -->
 
         <div class="right hidden md:block" v-if="!currentUser">
             <button @click="SignupModaltoggle" type="button" class="text-white shadow bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -32,22 +19,23 @@
             </button>
         </div>
 
-        <div v-else class="flex justify-start items-center">
-            <router-link :to="{ name : 'Home'}"
-                         class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200">
-                        <i class="fa-solid fa-house text-slate-500 text-1xl"></i>
-            </router-link>
-
+        <div v-else class="flex justify-end items-center">
             <router-link :to="{ name : 'JobList'}"
                          class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200">
                         
                         <i class="fa-solid fa-briefcase text-slate-500 text-1xl"></i>
             </router-link>
 
-            <router-link :to="{name:'postJob'}" 
+            <router-link :to="{ name : 'Home'}"
+                         class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200">
+                         <i class="fa-solid fa-message text-slate-500 text-1xl"></i>
+            </router-link>
+
+            <router-link v-if="isCompany" :to="{name:'postJob'}" 
                           class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200"
                           data-tooltip-target="Post a Job">
-                <i class="fa-solid fa-table-list text-1xl text-slate-500 hover:text-teal-500"></i>
+                <!-- <i class="fa-solid fa-table-list text-1xl text-slate-500 hover:text-teal-500"></i> -->
+                <i class="fa-regular fa-address-card text-1xl text-slate-500 hover:text-teal-500"></i>
             </router-link>
 
             <router-link :to="{name:'mylistng'}" 
@@ -62,12 +50,6 @@
                @click="Logout"></i>
            
         </div>
-
-        <div class="md:hidden block">
-            <!-- <button>
-                <i class="fa-solid fa-bars text-2xl"></i>
-            </button> -->
-        </div>
     </div>
 </nav>
     <!-- ==== SignIn  ===== -->
@@ -77,7 +59,6 @@
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
 import Login from '@/components/Login.vue'
 import SignIn from '../components/SignIn'
 import toggleModal from '../composables/toggleModal'
@@ -85,6 +66,7 @@ import getUser from '@/composables/getUser'
 import useLogout from '@/composables/useLogout'
 import { useRoute, useRouter } from 'vue-router'
 import { watch } from 'vue'
+import checkProfile from '@/composables/checkProfile'
 
 export default {
     components: { SignIn,Login },
@@ -116,7 +98,20 @@ export default {
             }
         })
 
-        return { SignupModaltoggle,showSigupModal,LoginModaltoggle,showLoginModal,currentUser,Logout}
+        // CHECK USER PROFILE
+        const {isEmployee,isCompany} = checkProfile()
+      
+        const data_object = {
+            SignupModaltoggle,
+            showSigupModal,
+            LoginModaltoggle,
+            showLoginModal,
+            currentUser,
+            Logout,
+            isEmployee,
+            isCompany
+        }
+        return data_object
     }
 }
 </script>

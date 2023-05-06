@@ -7,7 +7,7 @@
                 </div>
                  
                 <div class="right">
-                    <h1 class="text-lg font-lg text-sky-600 mb-2">Software Developer | Senior Laravel Developer</h1>
+                    <h1 class="text-lg font-lg text-sky-600 mb-2">{{ job.position }}</h1>
                     <h1 class="mb-2 ml-5 text-md font-bold tracking-tight text-slate-500 dark:text-white text-left whitespace-normal">{{ job.Company }}</h1>
                     <h1 class="mb-5 ml-5 text-md  tracking-tight text-slate-500 dark:text-white text-left whitespace-normal">California Usa</h1>
                     <!-- <p class="font-normal text-gray-700 dark:text-gray-400 p-4">{{ job.JobDescription.substring(0,50) + '....see more' }}</p> -->
@@ -24,7 +24,7 @@
 
                         <div class="flex justify-around">
                             <i class="fa-solid fa-peso-sign"></i>
-                            <small>100-120,000</small>
+                            <small>{{ job.salary }}</small>
                         </div>
                     </div>
                 </div> 

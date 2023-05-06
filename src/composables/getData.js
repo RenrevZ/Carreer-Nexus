@@ -4,8 +4,10 @@ import { projectFirestore } from '../firebase/config'
 const getData =  () => {
     const jobs = ref([])
     const error = ref([])
+    const isLoading = ref(false)
     const loadData = async () => {
     try{
+        isLoading.value = true
         const response = await projectFirestore.collection('Jobs').get()
         
         jobs.value = response.docs.map(doc => {
@@ -16,11 +18,12 @@ const getData =  () => {
         error.value = err.message
         console.log(error.value) 
     }
+    isLoading.value = false
     }
 
     loadData()
 
-    return { error, jobs , loadData}
+    return { error, jobs , loadData,isLoading}
 }
 
 export default  getData 
