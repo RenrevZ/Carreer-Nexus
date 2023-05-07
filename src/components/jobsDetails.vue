@@ -170,14 +170,14 @@ export default {
         // COMPOSABLES 
         const { error, jobs,collectionData,isLoading} = getSingleData(props.id,'Jobs')
         // const {  data, loadData } = queryData('Company')
-        // const { user } = getUser()
+        const { currentUser } = getUser()
         let showLoginModal = ref(false)
         let showLoginfirst = ref(false)
         const companyId = jobs.value.length > 0 ? jobs.value[0].Company : undefined
         // loadData()
 
         const apply = () => {
-            if(user.value != null){
+            if(currentUser.value != null){
                 console.log('applied')
             }else{
                 showLoginModal.value = true

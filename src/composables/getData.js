@@ -6,14 +6,18 @@ const getData =  () => {
     const error = ref([])
     const isLoading = ref(false)
     const collectionData = ref([])
-    const loadData = async () => {
+    const loadData = async (search) => {
     try{
         isLoading.value = true
         const response = await projectFirestore.collection('Jobs').get()
         
-        jobs.value = response.docs.map(doc => {
-            return {...doc.data(),id : doc.id}
-        })
+        
+        if(search){
+            jobs.value = response.docs.map(doc => ({...doc.data(),id : doc.id}))
+                         .filter(job => job.position.toLowerCase().includes(search.toLowerCase()))
+          }else{
+                jobs.value = response.docs.map(doc => ({...doc.data(),id : doc.id}))
+        }
         
         if (response.docs.length > 0) { // check if any documents were returned
             const user = response.docs[0].data().user; // get the user property from the first document

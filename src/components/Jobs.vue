@@ -20,12 +20,12 @@
               </div>
 
               <div class="flex justify-around">
-                  <i class="fa-solid fa-business-time mr-2"></i>
+                  <i class="fa-solid fa-business-time text-slate-500 mr-2"></i>
                   <small>{{ job.Experience }}</small>
               </div>
 
               <div class="flex justify-around">
-                  <i class="fa-solid fa-peso-sign mr-2"></i>
+                  <i class="fa-solid fa-peso-sign mr-2 text-slate-500"></i>
                   <small>{{ job.salary }}</small>
               </div>
             </div>
