@@ -5,7 +5,7 @@
             <div v-for="creds in credential" :key="creds">
                 <!-- PROFILE IMAGE -->
                 <span v-if="!isLoading" class="relative w-full">
-                    <img src="https://i.pinimg.com/564x/ef/cb/5a/efcb5aff8710f5fb321065027cb149b2.jpg" class="rounded-full h-32 object-cover mx-auto">
+                    <img :src="creds.coverUrl ? creds.coverUrl: 'https://i.pinimg.com/564x/ef/cb/5a/efcb5aff8710f5fb321065027cb149b2.jpg'" class="rounded-full h-32 object-cover mx-auto">
                     <span class="bottom-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
                 </span>
                 

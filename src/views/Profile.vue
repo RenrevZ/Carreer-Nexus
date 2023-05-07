@@ -11,11 +11,18 @@
 import EmployeeProfile from '@/components/EmployeeProfile'
 import CompanyProfile from '@/components/CompanyProfile'
 import checkProfile from '@/composables/checkProfile'
+import queryData from '@/composables/queryData'
+
 export default {
     components: {EmployeeProfile,CompanyProfile},
     setup(){
+
+        // COMPOSABLES
         const { isEmployee } = checkProfile()
-        // console.log(isEmployee.value)
+        const { data, loadData } = queryData('EmployeeDetails');
+        console.log(isEmployee.value)
+        loadData()
+
         const dataObject = { 
           isEmployee
         }

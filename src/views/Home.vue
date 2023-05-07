@@ -14,7 +14,7 @@
   <!-- ==== JOBS DATA === -->
   <div v-if="!isLoading">
     <div v-if="jobs != ''" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-      <Jobs :jobs="jobs" />
+      <Jobs :jobs="jobs" :company="collectionData" />
     </div>
     
     <div v-else class="w-full flex justify-center items-center">
@@ -78,7 +78,7 @@ export default {
   components: { Jobs, SignIn, Login,Search,CardLoading},
   props:['showSignupModal','showLoginModal'],
   setup(){
-      const { error, jobs , loadData,isLoading} = getData()
+    const { error, jobs ,collectionData, loadData,isLoading} = getData()
       const {SignupModaltoggle,showSigupModal,LoginModaltoggle,showLoginModal} = toggleModal()
       // const {currentPageItems,currentPage,totalPages,nextPage,previousPage,jobs,loadData,isLoading } = paginateData()
   
@@ -103,7 +103,8 @@ export default {
             // previousPage,
             jobs,
             onSearchSubmit,
-            isLoading
+            isLoading,
+            collectionData
         }
       
     return data_object

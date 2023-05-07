@@ -1,23 +1,34 @@
 <template>
       <div class="flex flex-col-reverse lg:flex-row mt-2 justify-center items-start m-auto">
-        <div class="right p-2 max-w-full">
-           
+        <div class="right p-2 max-w-full">           
           <div class="p-6 mb-6  bg-white border border-teal-400 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
               <div v-if="isLoading" class="flex flex-col justify-start items-start">
-                <h1 class="text-2xl font-extrabold tracking-tight text-slate-500 dark:text-white">
-                    {{ jobs.Company }}
-                </h1>
-                <h6 class=" font-extrabold tracking-tight text-slate-500 dark:text-white">
-                    Company Description:
-                </h6>
-                <p>{{ jobs.Company_overview }}</p>
+                <span v-for="creds in company" :key="creds.companyName">
+                    <div class="flex justify-around items-center mb-8">
 
-                <ul class="flex flex-col justify-start items-start">
-                    <li> <i class="fa-solid fa-briefcase text-teal-600 text-lg p-1"></i>{{ jobs.Experience }}</li>
-                    <li><i class="fa-solid fa-map-location-dot text-teal-600 text-lg p-1"></i> {{ jobs.Location }}</li>
-                    <li><i class="fa-solid fa-business-time text-teal-600 text-lg p-1"></i>{{ jobs.Timeline }}</li>
-                </ul>
-              </div>
+                        <div  class="relative">
+                            <img :src="creds.coverUrl" class="rounded-full h-32 object-cover mx-auto">
+                            <span class="bottom-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
+                        </div>
+
+                        <div class="">
+                            <h1 class="text-2xl font-bold text-center text-sky-600">
+                            {{ creds.companyName }}
+                            </h1>
+                            <ul class="flex flex-col justify-start items-start">
+                                <li> <i class="fa-solid fa-people-group text-sky-600 text-lg p-1"></i>{{ creds.companySize }}</li>
+                                <li><i class="fa-solid fa-map-location-dot text-sky-600 text-lg p-1"></i> {{ creds.companyLocation }}</li>
+                                <li><i class="fa-solid fa-briefcase text-sky-600 text-lg p-1"></i>{{ creds.industry }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                   
+                    <h6 class="font-extrabold text-left tracking-tight text-slate-500 dark:text-white mb-5">
+                        Company History:
+                    </h6>
+                    <p class="max-w-sm text-left">{{ creds.history }}</p>
+                </span>
+               </div>
 
               <div v-else>
                    <LoadingAnimate profile="true" />
@@ -146,20 +157,25 @@
 import getSingleData from '../composables/getSingleData'
 import getUser from '@/composables/getUser'
 import Login from '../components/Login'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import LoadingAnimate from '@/components/LoadingAnimate'
+import queryData from '@/composables/queryData'
+import getDataByuser from '@/composables/getDataByuser'
 
 
 export default {
     components: { Login,LoadingAnimate },
     props: ['id'],
     setup(props,{emit}){
-        const { error, jobs ,isLoading} = getSingleData(props.id,'Jobs')
-        const { user } = getUser()
+        // COMPOSABLES 
+        const { error, jobs,collectionData,isLoading} = getSingleData(props.id,'Jobs')
+        // const {  data, loadData } = queryData('Company')
+        // const { user } = getUser()
         let showLoginModal = ref(false)
         let showLoginfirst = ref(false)
         const companyId = jobs.value.length > 0 ? jobs.value[0].Company : undefined
-        
+        // loadData()
+
         const apply = () => {
             if(user.value != null){
                 console.log('applied')
@@ -172,11 +188,21 @@ export default {
             }
            
         }
-
+        
+        
         const closeModal = () => showLoginModal.value = false
-
-    
-        return { error,jobs,apply,showLoginModal,showLoginfirst,isLoading,closeModal}
+        
+        const dataObject = {
+            error,
+            jobs,
+            apply,
+            showLoginModal,
+            showLoginfirst,
+            isLoading,
+            closeModal,
+            company : collectionData
+        }
+        return dataObject
     }   
 }
 </script>

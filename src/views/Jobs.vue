@@ -33,7 +33,7 @@
  <!-- ==== JOBS DATA === -->
  <div v-if="!isLoading">
     <div v-if="jobs != ''" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-      <Jobs :jobs="jobs" />
+      <Jobs :jobs="jobs" :company="company" />
     </div>
     
     <div v-else class="w-full flex justify-center items-center">
@@ -59,7 +59,7 @@ export default {
     components: {Search,Jobs},
     setup(){
         // const {currentPageItems,currentPage,totalPages,nextPage,previousPage,jobs,loadData,isLoading } = paginateData()
-      const { error, jobs , loadData,isLoading} = getData()
+      const { error, jobs ,collectionData, loadData,isLoading} = getData()
      //== SEARCH EVENT
     const provideSearch = inject('search')
     const onSearchSubmit = (event) => {
@@ -77,7 +77,8 @@ export default {
             // previousPage,
             jobs,
             onSearchSubmit,
-            isLoading
+            isLoading,
+            company:collectionData
     }
         return data_object
     }

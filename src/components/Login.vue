@@ -80,6 +80,7 @@ export default {
             await login(email.value,password.value)
             if(!error.value){
                 router.push({name:'JobList'});
+                location.reload()
             }
         }
         
