@@ -49,7 +49,7 @@ const routes = [
     path: '/setup',
     name: 'Setup',
     component: () => import('@/components/Setup'),
-    beforeEnter: requireAuth
+    // beforeEnter: requireAuth
   },
   {
     path: '/:pathMatch(.*)*',

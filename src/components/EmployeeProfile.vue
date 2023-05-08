@@ -1,12 +1,12 @@
 <template>
-<div v-if="!isLoading || !Loading">
   <div class="flex flex-col justify-center items-center h-full w-full">
     <div class="grid grid-col-1 md:grid-rows-3 md:grid-flow-col md:gap-4 my-10 mt-24">
         <div class="row-span-3 flex flex-col justify-start items-center shadow-lg p-10 md:max-w-md mx-auto">
             <div v-for="creds in credential" :key="creds">
+                
                 <!-- PROFILE IMAGE -->
                 <span v-if="!isLoading" class="relative w-full">
-                    <img :src="creds.coverUrl ? creds.coverUrl: 'https://i.pinimg.com/564x/ef/cb/5a/efcb5aff8710f5fb321065027cb149b2.jpg'" class="rounded-full h-32 object-cover mx-auto">
+                    <img :src="creds.coverUrl" class="rounded-full h-32 object-cover mx-auto">
                     <span class="bottom-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
                 </span>
                 
@@ -20,7 +20,7 @@
 
                     <p class="mt-2 text-md text-gray-600 text-center">{{ creds.position }}</p>
                 
-                    <p class="text-sm py-10">
+                    <p class="text-sm text-left py-10">
                         {{ creds.bio }}
                     </p>
             
@@ -39,6 +39,17 @@
                                     <span class="text-slate-100">{{ skill }}</span>
                                 </div>
                              </span>
+
+                             <div v-if="skills" class="flex items-center justify-around bg-sky-400 rounded-full px-3 py-1 whitespace-nowrap">
+                                    <span class="text-slate-100">{{ skills }}</span>
+                            </div>
+
+                            <!-- ADD SKILLS -->
+                            <span v-for="skills in SkillsArray" :key="skills">
+                                <span class="flex items-center justify-around text-slate-100 bg-sky-400 rounded-full px-3 py-1 whitespace-nowrap">
+                                        {{ skills }}
+                                </span>
+                            </span>
                         </span>
                         <span v-else class="grid grid-cols-1 gap-5 mb-6">
                            <span class="grid grid-cols-3 gap-5 mb-6">
@@ -82,19 +93,20 @@
                                placeholder="Add Skills"
                               />
                              
-                              <!-- ADD SKILLS -->
-                              <span v-if="SkillsArray" class="w-full">
-                                    <span v-for="skills in SkillsArray" :key="skills" class="grid grid-cols-2 mb-3 w-full">
-                                        <span class="rounded-full bg-sky-400 text-slate-100 px-5 py-2 text-center">
-                                            {{ skills }}
-                                        </span>
-                                    </span>
-                              </span>
-
+                              
+                            <span v-if="!Loading">
                               <button class="w-full text-white bg-sky-700 hover:bg-sky-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                        @click="updateSkills">
                                        Add Skills
                              </button>
+                            </span>
+                            <span v-else>
+                              <button class="w-full text-white bg-sky-300 hover:bg-sky-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                       @click="updateSkills"
+                                       disabled>
+                                       Adding Skills.....
+                             </button>
+                            </span>
                         </span>
                         
                         <span v-else>
@@ -157,7 +169,7 @@
                     <h1 class="text-md font-semibold text-slate-500 dark:text-white p-2">
                         Address
                     </h1>
-                    <p>{{ creds.Address }}</p>
+                    <p>{{ creds.address }}</p>
                 </div>
             </div>
         </div>
@@ -174,11 +186,11 @@
                     <div class="flex flex-col justify-start items-center">
                         <h1 class="text-sky-600 text-2xl">{{ Xp.company }}</h1>
                         <h3 class="text-slate-600 text-xl">{{ Xp.position }}</h3>
-                        <span v-if="isCurrent = true">
-                            <small>{{ Xp.dateStarted }} - Present | Quezon Ave,Quezon City</small>
+                        <span v-if="Xp.isCurrent">
+                            <small>{{ Xp.dateStarted }} - Present | {{ Xp.companyAddress }}</small>
                         </span>
                         <span v-else>
-                            <small>{{ Xp.dateStarted }} - {{ Xp.dateLeave }} | Quezon Ave,Quezon City</small>
+                            <small>{{ Xp.dateStarted }} - {{ Xp.dateLeave }} | {{ Xp.companyAddress }}</small>
                         </span>
                     </div>
                 </div>
@@ -192,10 +204,6 @@
             </div>
         </div>
     </div>
-</div>
-</div>
-<div v-else>
-    <CardLoading />
 </div>
 
 <!-- ADD EXPERIENCE MODAL -->
@@ -246,6 +254,18 @@
                            v-model="employed"
                            class="w-4 mr-4 mt-3 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                     <label>im currently employed here</label>
+            </div>
+            <div class="grid grid-cols-1 gap-2">
+                <div class="mb-3">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Company Address
+                    </label>
+                    <input type="companyAddress" 
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           placeholder="John"
+                           v-model="companyAddress"
+                           required>
+                </div>
             </div>
 
             <div class="grid grid-cols-2 gap-2">
@@ -303,50 +323,60 @@
 
                 <div class="w-full">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
-                    <input type="text" 
+                    <input type="text"
+                            ref="refFirstname"
                            class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                            placeholder="e.g Harvy"
-                           v-model="eFirstName"
+                           v-model="UpdateFormInput.firstName"
                            required>
+                    <small class="text-rose-400" ref="firstNameError"></small>
                 </div>
 
                 <div class="w-full">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
-                    <input type="text" 
+                    <input type="text"
+                           ref="refMiddlename" 
                            class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                            placeholder="e.g M"
-                           v-model="eMiddleName"
+                           v-model="UpdateFormInput.middleName"
                            required>
+                    <small class="text-rose-400" ref="middleNameError"></small>
                 </div>
 
                 <div class="w-full">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
-                    <input type="text" 
+                    <input type="text"
+                           ref="refLastname" 
                            class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                            placeholder="e.g Gascon"
-                           v-model="eLastName"
+                           v-model="UpdateFormInput.lastName"
                            required>
+                    <small class="text-rose-400" ref="lastNameError"></small>
                 </div>
             </div>
 
             <div class="w-full">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Position</label>
-                    <input type="text" 
+                    <input type="text"
+                           ref="refPosition" 
                            class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                            placeholder="e.g Web Application Developer"
-                           v-model="ePosition"
+                           v-model="UpdateFormInput.position"
                            required>
+                    <small class="text-rose-400" ref="positionError"></small>
             </div>
 
             <div class="w-full">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Bio
                 </label>
-                <textarea rows="5" 
+                <textarea rows="5"
+                          ref="refBio" 
                           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                           placeholder="Place bio here..."
-                          v-model="ebio"
+                          v-model="UpdateFormInput.bio"
                           style="resize:none;"></textarea>
+                <small class="text-rose-400" ref="bioError"></small>
             </div>
 
             <div class="w-full mt-5">
@@ -457,8 +487,9 @@ import useData from '@/composables/useData'
 import Modal from './Modal.vue'
 import getUser from '@/composables/getUser'
 import Storage from '@/composables/Storage'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import CardLoading from './CardLoading.vue'
+import InputError from '@/composables/InputError'
 
 export default {
     components: {LoadingAnimate,Modal,CardLoading},
@@ -475,6 +506,7 @@ export default {
         const { addDoc } = useData('EmployeeExperience')
         const { currentUser } = getUser()
         const {url,filePath,uploadImage} = Storage()
+        const {errorMessage,showError} = InputError()
         const { error, data, loadData, isLoading } = queryData('EmployeeDetails')
         loadData()
         
@@ -514,6 +546,7 @@ export default {
         const dateStarted = ref('')
         const employed = ref(false)
         const dateLeave = ref('')
+        const companyAddress = ref('')
 
         // ADD EXPERIENCE FUNCTION
         const addExperience = async () => {
@@ -526,6 +559,7 @@ export default {
                 dateStarted:dateStarted.value,
                 dateLeave:dateLeave.value,
                 isCurrent:employed.value,
+                companyAddress:companyAddress.value,
                 user : currentUser.value.uid,
                 coverUrl: url.value,
                 filePath: filePath.value
@@ -536,6 +570,7 @@ export default {
       
           Loading.value = false
           isOpen.value = false
+          location.reload()
         }
 
         // COMPOSABLES
@@ -570,35 +605,57 @@ export default {
 
         // UPDATE SKILLS
         const updateSkills = () => {
-            SkillsArray.value.map((skill) => {
-                updateData.value[0].AddSkills(skill)
+            SkillsArray.value.map(async (skill) => {
+                try {
+                    Loading.value = true
+                    await updateData.value[0].AddSkills(skill)
+                } catch (error) {
+                    console.log(error)
+                }
+                Loading.value = false
+                location.reload()
             })
+
         }
 
-        // EDIT PROFILE
-        const showEdit = ref(false)
-        const eFirstName = ref('')
-        const eMiddleName = ref('')
-        const eLastName = ref('')
-        const ePosition = ref('')
-        const ebio = ref('')
+        // EDIT PROFILE MODAL
+        
+        // INPUTS
+        const UpdateFormInput = reactive({
+            firstName:'',
+            middleName:'',
+            lastName:'',
+            position:'',
+            bio:''
+        })
+
         const EditInfo = () => showEdit.value = true
+        // REF INPUTS
+        const refFirstname = ref('')
+        const refMiddlename = ref('')
+        const refLastname = ref('')
+        //  REF ERROR
+        const firstNameError = ref('')
+        const middleNameError = ref('')
+       
         // SUBMIT
         const UpdateProfile = async () => {
-           try {
-            Loading.value = true
-             await updateData.value[0].updateDoc({ 
-                firstName:eFirstName.value,
-                middleName:eMiddleName.value,
-                lastName:eLastName.value,
-                position:ePosition.value,
-                bio:ebio.value
-             })
-           } catch (error) {
+        
+            try {
+                Loading.value = true
+                await updateData.value[0].updateDoc({ 
+                    firstName: UpdateFormInput.firstName,
+                    middleName:UpdateFormInput.middleName,
+                    lastName: UpdateFormInput.lastName,
+                    position: UpdateFormInput.position,
+                    bio: UpdateFormInput.bio
+                })
+             } catch (error) {
                 console.log(error)
-           }
-           Loading.value = false
-           showEdit.value = false
+             }
+            Loading.value = false
+            showEdit.value = false
+            location.reload()
         }
 
         // EDIT BASIC INFO
@@ -627,6 +684,7 @@ export default {
            }
            Loading.value = false
            showBasicInfo.value = false
+           location.reload()
         }
 
         // GET EXPERIENCE
@@ -706,7 +764,12 @@ export default {
             dataXp,
             removeSkill,
             showupdateSkill,
-            updateSkill
+            updateSkill,
+            companyAddress,
+            // REF AND ERROR FOR MODALS
+            refFirstname,
+            firstNameError,
+            UpdateFormInput
         }
 
         return dataObject

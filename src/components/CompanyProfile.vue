@@ -202,18 +202,18 @@
         const companyName = ref('')
         // SUBMIT
         const UpdateProfile = async () => {
-        //    try {
-        //     Loading.value = true
-        //      await updateData.value[0].updateDoc({ 
-        //         firstName:eFirstName.value,
-        //         middleName:eMiddleName.value,
-        //         lastName:eLastName.value,
-        //         position:ePosition.value,
-        //         bio:ebio.value
-        //      })
-        //    } catch (error) {
-        //         console.log(error)
-        //    }
+           try {
+            Loading.value = true
+             await updateData.value[0].updateDoc({ 
+                firstName:eFirstName.value,
+                middleName:eMiddleName.value,
+                lastName:eLastName.value,
+                position:ePosition.value,
+                bio:ebio.value
+             })
+           } catch (error) {
+                console.log(error)
+           }
         console.log(companyName.value)
            Loading.value = false
            showEdit.value = false

@@ -479,6 +479,7 @@ export default {
         
         //=== ADDING EVERY DATA TO THE FIREBASE
         const postJob = async () => {
+            // CHECK AND ADD ERROR
             const refArray = [
                     Position,
                     Jobdescription,
