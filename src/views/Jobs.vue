@@ -32,7 +32,7 @@ import { inject } from 'vue';
 import CardLoading from '@/components/CardLoading.vue'
 
 export default {
-    components: {Search,Jobs},
+    components: {Search,Jobs,CardLoading},
     setup(){
         // const {currentPageItems,currentPage,totalPages,nextPage,previousPage,jobs,loadData,isLoading } = paginateData()
       const { error, jobs ,collectionData, loadData,isLoading} = getData()

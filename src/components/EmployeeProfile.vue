@@ -1,4 +1,5 @@
 <template>
+<div v-if="!isLoading || !Loading">
   <div class="flex flex-col justify-center items-center h-full w-full">
     <div class="grid grid-col-1 md:grid-rows-3 md:grid-flow-col md:gap-4 my-10 mt-24">
         <div class="row-span-3 flex flex-col justify-start items-center shadow-lg p-10 md:max-w-md mx-auto">
@@ -191,7 +192,11 @@
             </div>
         </div>
     </div>
-  </div>
+</div>
+</div>
+<div v-else>
+    <CardLoading />
+</div>
 
 <!-- ADD EXPERIENCE MODAL -->
 <Modal :isOpen="isOpen">
@@ -453,9 +458,10 @@ import Modal from './Modal.vue'
 import getUser from '@/composables/getUser'
 import Storage from '@/composables/Storage'
 import { ref } from 'vue'
+import CardLoading from './CardLoading.vue'
 
 export default {
-    components: {LoadingAnimate,Modal},
+    components: {LoadingAnimate,Modal,CardLoading},
     setup(){
         // INPUTS
         const showInput = ref(false)
@@ -469,6 +475,8 @@ export default {
         const { addDoc } = useData('EmployeeExperience')
         const { currentUser } = getUser()
         const {url,filePath,uploadImage} = Storage()
+        const { error, data, loadData, isLoading } = queryData('EmployeeDetails')
+        loadData()
         
         
         // IMAGE UPLOAD
@@ -530,13 +538,9 @@ export default {
           isOpen.value = false
         }
 
-
-        const { error, data, loadData, isLoading } = queryData('EmployeeDetails')
-        loadData()
-
         // COMPOSABLES
         async function fetchData() {
-            const { error, data, loadData, isLoading } = queryData('EmployeeDetails')
+            const { data, loadData } = queryData('EmployeeDetails')
             await loadData()
             
             updateData.value = data.value.map((newData) => {
@@ -681,7 +685,6 @@ export default {
             dateStarted,
             dateLeave,
             error,
-            isLoading,
             Loading,
             EditInfo,
             showEdit,

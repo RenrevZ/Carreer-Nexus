@@ -9,8 +9,8 @@ const getData = (collectionName) => {
 
   const loadData = async () => {
     try {
-      const { currentUser,promise } = getUser()
       isLoading.value = true
+      const { currentUser,promise } = getUser()
       // Await the promise to ensure currentUser is available before proceeding
       const responses = await promise.then((currentUser) => {
             return { currentUser }
@@ -23,15 +23,12 @@ const getData = (collectionName) => {
       data.value = response.docs.map((doc) => {
         return { ...doc.data(), id: doc.id }
       })
-
-      isLoading.value = false
     } catch (err) {
-
-      isLoading.value = false
       error.value = err.message
       console.log(err)
     }
-  }
+    isLoading.value = false
+}
   loadData()
   return { error, data, loadData,isLoading }
 }
