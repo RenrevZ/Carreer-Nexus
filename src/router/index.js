@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { projectAuth } from '../firebase/config'
 
+// ROUTE GUARD
 const requireAuth = (to,from,next) => {
   let user = projectAuth.currentUser
 
@@ -27,15 +28,15 @@ const routes = [
     path: '/jobs/:id',
     name: 'JobDetails',
     component: () => import('../components/jobsDetails.vue'),
-    props: true,
-    beforeEnter: requireAuth
+    props: true
+    
   },
   {
     path: '/jobs/postJob',
     name: 'postJob',
     component: () => import('../components/CreateJob'),
-    props: true,
-    beforeEnter: requireAuth
+    props: true
+  
   },
   {
     path: '/Profile',
@@ -49,6 +50,11 @@ const routes = [
     name: 'Setup',
     component: () => import('@/components/Setup'),
     beforeEnter: requireAuth
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('@/views/404Notfound')
   }
 ]
 
