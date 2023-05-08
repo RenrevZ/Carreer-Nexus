@@ -9,9 +9,8 @@
         <!-- ==== POSTION ==== -->
         <div class="relative z-0 w-full mb-6 group">
             <input type="text" 
-                   name="position" 
-                   id="floating_email" 
-                   v-model="position" 
+                   v-model="position"
+                   ref="Position"
                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
                    placeholder=" " 
                    required />
@@ -20,12 +19,13 @@
                    class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 Position
             </label>
+            <small class="text-rose-400" ref="positionError"></small>
         </div>
 
         <!-- ==== JOB DESCRIPTION ==== -->
         <div class="relative z-0 w-full mb-6 group">
             <input type="text" 
-                   name="floating_email" 
+                   ref="Jobdescription" 
                    id="floating_email" 
                    v-model="JobDescription"  
                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
@@ -35,13 +35,14 @@
             <label for="floating_email" class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 Job Description
             </label>
+            <small class="text-rose-400" ref="JobdescError"></small>
         </div>
 
         <div class="md:grid grid-cols-3 gap-2">
             <!-- ==== EXPERIENCE ==== -->
             <div class="relative z-0 w-full mb-6 group">
                 <input type="text" 
-                    name="floating_email" 
+                    ref="experience" 
                     id="floating_email" 
                     v-model="Experience" 
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
@@ -52,12 +53,13 @@
                     class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Experience
                 </label>
+                <small class="text-rose-400" ref="xpError"></small>
             </div>
 
             <!-- ==== LOCATION ==== -->
             <div class="relative z-0 w-full mb-6 group">
                 <input type="text" 
-                    name="floating_email" 
+                    ref="Salary" 
                     id="floating_email" 
                     v-model="salary" 
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
@@ -68,12 +70,13 @@
                     class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Salary
                 </label>
+                <small class="text-rose-400" ref="salaryError"></small>
             </div>
 
             <!-- ==== LOCATION ==== -->
             <div class="relative z-0 w-full mb-6 group">
                 <input type="text" 
-                    name="floating_email" 
+                    ref="timeline" 
                     id="floating_email" 
                     v-model="Timeline" 
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
@@ -84,6 +87,7 @@
                     class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Timeline
                 </label>
+                <small class="text-rose-400" ref="timelineError"></small>
             </div>
         </div>
 
@@ -108,8 +112,8 @@
             <div class="flex flex-col items-start justify-start" ref="JobHighlighDiv">
                     <div class="relative z-0 w-full mb-6 group">
                       <span v-if="Jharray.length != 5">
-                        <input type="text" 
-                               name="floating_email" 
+                        <input type="text"
+                               ref="jobhighlight"
                                id="floating_email" 
                                v-model="JobHighlight" 
                                @keyup.enter="addItem" 
@@ -118,11 +122,12 @@
                                max="20"
                                required
                               />
+                        <small class="text-rose-400" ref="jobhighlightError"></small>
                       </span>
 
                       <span v-else>
                         <input type="text" 
-                               name="floating_email" 
+                               ref="jobhighlight" 
                                id="floating_email" 
                                v-model="JobHighlight" 
                                @keyup.enter="addItem" 
@@ -137,6 +142,7 @@
                                class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Job Highlights
                         </label>
+                        <small class="text-rose-400" ref="jobhighlightError"></small>
                     </div>
 
                 </div>
@@ -146,8 +152,8 @@
             <h6>Qualifications</h6>
             <div class="flex flex-col items-start justify-start" ref="JobHighlighDiv">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="floating_email" 
-                               id="floating_email" 
+                        <input type="text" 
+                               ref="qualification" 
                                v-model="Qualifications" 
                                @keyup.enter="addQualification" 
                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
@@ -158,6 +164,7 @@
                                class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Qualifications
                         </label>
+                        <small class="text-rose-400" ref="qualificationError"></small>
                     </div>
             </div>
        
@@ -166,8 +173,8 @@
             <h6>Roles and Responsibilities</h6>
             <div class="flex flex-col items-start justify-start" ref="JobHighlighDiv">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="floating_email" 
-                               id="floating_email" 
+                        <input type="text"
+                               ref="rolesandRes" 
                                v-model="RoleandRes" 
                                @keyup.enter="addRolesAnResposibilities" 
                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
@@ -178,14 +185,15 @@
                                class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                Roles and Responsibilities
                         </label>
+                        <small class="text-rose-400" ref="rolesandResError"></small>
                     </div>
             </div>
 
             <h6>Required Skills</h6>
             <div class="flex flex-col items-start justify-start" ref="JobHighlighDiv">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="floating_email" 
-                               id="floating_email" 
+                        <input type="text" 
+                               ref="skills" 
                                v-model="RequiredSkills" 
                                @keyup.enter="addRequiredSkills" 
                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
@@ -196,6 +204,7 @@
                                class="peer-focus:font-medium absolute left-0 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                               Required Skills
                         </label>
+                        <small class="text-rose-400" ref="skillsError"></small>
                     </div>
             </div>
          
@@ -365,9 +374,11 @@ import { computed,ref } from 'vue';
 import { useRouter } from 'vue-router'
 import getUser from '@/composables/getUser'
 import useData from '@/composables/useData'
+import InputError from '@/composables/InputError'
 
 export default {
     setup(){
+        // INPUTS
         const JobHighlighDiv = ref(null)
         const position = ref('')
         const JobHighlight = ref('')
@@ -383,10 +394,33 @@ export default {
         let RoleandResArray = ref([])
         let RequiredSkillsArray = ref([])
 
+        // REF INPUT
+        const Position = ref(null)
+        const Jobdescription = ref('')
+        const experience = ref('')
+        const Salary = ref('')
+        const timeline = ref('')
+        const jobhighlight = ref('')
+        const qualification = ref('')
+        const rolesandRes = ref('')
+        const skills = ref('')
+
+        // REF INPUT ERROR DOM ELEM.
+        const positionError = ref('')
+        const JobdescError = ref('')
+        const xpError = ref('')
+        const salaryError = ref('')
+        const timelineError = ref('')
+        const jobhighlightError = ref('')
+        const qualificationError = ref('')
+        const rolesandResError = ref('')
+        const skillsError = ref('')
+
         // COMPOSABLES
         const {error, addDoc, isLoading} = useData('Jobs')
         const route = useRouter()
         const { currentUser } = getUser()
+        const {errorMessage,showError} = InputError()
         const maxCharsPerLine = ref(20)
         
         
@@ -445,20 +479,60 @@ export default {
         
         //=== ADDING EVERY DATA TO THE FIREBASE
         const postJob = async () => {
-           await addDoc({
-                position:position.value,
-                JobDescription: JobDescription.value,
-                salary:salary.value,
-                JobHighlights: Jharray.value,
-                Qualifications: QualificationsArray.value,
-                RolesAnResposibilities: RoleandResArray.value,
-                tags: RequiredSkillsArray.value,
-                Timeline: Timeline.value,
-                Experience: Experience.value,
-                user:currentUser.value.uid
+            const refArray = [
+                    Position,
+                    Jobdescription,
+                    experience,
+                    Salary,
+                    timeline,
+                    jobhighlight,
+                    qualification,
+                    rolesandRes,
+                    skills
+                ]
+                const modelArray = [
+                    position,
+                    JobDescription,
+                    Experience,
+                    salary,
+                    Timeline,
+                    Jharray,
+                    QualificationsArray,
+                    RoleandResArray,
+                    RequiredSkillsArray
+                ]
+                const ErrorElement = [
+                    positionError,
+                    JobdescError,
+                    xpError,
+                    salaryError,
+                    timelineError,
+                    jobhighlightError,
+                    qualificationError,
+                    rolesandResError,
+                    skillsError
+                ]
+
+            refArray.forEach((data,index) => {
+                showError(data,modelArray[index],ErrorElement[index])
             })
 
-            route.push({name:'JobList'})
+            if(errorMessage.value == ''){
+                await addDoc({
+                    position:position.value,
+                    JobDescription: JobDescription.value,
+                    salary:salary.value,
+                    JobHighlights: Jharray.value,
+                    Qualifications: QualificationsArray.value,
+                    RolesAnResposibilities: RoleandResArray.value,
+                    tags: RequiredSkillsArray.value,
+                    Timeline: Timeline.value,
+                    Experience: Experience.value,
+                    user:currentUser.value.uid
+                })
+
+                route.push({name:'JobList'})
+            }
         }
 
         const dataobject = {
@@ -483,6 +557,27 @@ export default {
             isLoading,
             Timeline,
             salary,
+            // REF INPUT
+            Position,
+            Jobdescription,
+            errorMessage,
+            experience,
+            Salary,
+            timeline,
+            jobhighlight,
+            qualification,
+            rolesandRes,
+            skills,
+            // REF INPUT DOM ERROR
+            positionError,
+            JobdescError,
+            salaryError,
+            timelineError,
+            xpError,
+            jobhighlightError,
+            qualificationError,
+            rolesandResError,
+            skillsError,
             // word break every data
             DescriptionwordBreak
         }

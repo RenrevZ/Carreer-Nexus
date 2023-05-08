@@ -37,7 +37,7 @@
           </div>
 
           <div class="p-6 mb-6 bg-white border border-teal-400 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <div class="border-0 border-b border-gray-200 text-slate-800 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div class=" text-slate-800 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <h5 class="text-2xl font-extrabold tracking-tight text-slate-500 dark:text-white">
                     <i class="fa-regular fa-lightbulb"></i> Required Skills
                 </h5> 
@@ -91,7 +91,7 @@
         <div v-if="isLoading">
         <div class="flex flex-col items-start justify-start p-2 border-0 border-b border-gray-200 mb-4">
             <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Job Description</h2>
-                <small class="text-sm text-left  text-gray-500 dark:text-white p-2">
+                <small class="text-sm text-left text-gray-500 dark:text-white p-2">
                     {{ jobs.JobDescription }}
                 </small>                                                                                                     
          </div>
@@ -120,9 +120,9 @@
         <div v-if="isLoading">
             <div class="flex flex-col items-start justify-start  border-0 border-b border-gray-200 mb-4">    
             <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Roles And Resposibilities</h2>
-                <ul class="text-gray-500 list-disc list-inside dark:text-gray-400 " 
+                <ul class="text-gray-500 list-disc text-start list-inside dark:text-gray-400 " 
                     v-for="rarp in jobs.RolesAnResposibilities" :key="rarp">
-                    <li >{{ rarp }}</li>
+                    <li class="mb-2">{{ rarp }}</li>
                 </ul>
             </div>
         </div>
@@ -133,9 +133,9 @@
         <div v-if="isLoading">
           <div class="flex flex-col items-start justify-start p-2 border-0 border-b border-gray-200 mb-4">    
             <h2 class="mb-2 text-lg font-semibold text-slate-700 dark:text-white">Qualification</h2>
-                <ul class="text-gray-500 list-disc list-inside dark:text-gray-400" 
-                v-for="qualification in jobs.Qualifications" :key="qualification">
-                    <li>
+                <ul class="text-gray-500 text-start list-disc list-inside dark:text-gray-400" 
+                    v-for="qualification in jobs.Qualifications" :key="qualification">
+                    <li class="mb-2">
                         {{ qualification }}
                     </li>
                 </ul>
