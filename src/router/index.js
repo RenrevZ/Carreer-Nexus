@@ -40,7 +40,7 @@ const routes = [
   },
   {
     path: '/Profile',
-    name: 'mylistng',
+    name: 'Profile',
     component: () => import('../views/Profile'),
     props: true,
     beforeEnter: requireAuth
@@ -48,8 +48,19 @@ const routes = [
   {
     path: '/setup',
     name: 'Setup',
-    component: () => import('@/components/Setup'),
-    // beforeEnter: requireAuth
+    component: () => import('@/components/Setup')
+  },
+  {
+    path: '/message',
+    name: 'Message',
+    component: () => import('@/views/Message'),
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/Mylisting',
+    name: 'Mylisting',
+    component: () => import('@/views/MyLisiting'),
+    beforeEnter: requireAuth
   },
   {
     path: '/:pathMatch(.*)*',

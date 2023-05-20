@@ -301,7 +301,7 @@
 
         <div class="flex flex-col items-start justify-start p-2 border-0 border-b border-gray-200 mb-4">    
             <h2 class="mb-10 text-lg font-semibold text-slate-500 dark:text-white">Qualification</h2>
-                <ul class="text-gray-500 list-disc list-outside dark:text-gray-400 pl-5">
+                <ul class="text-gray-500 list-disc text-start list-inside dark:text-gray-400" >
                    
                     <span v-for="rarp in QualificationsArray" :key="rarp">
                         <li class="mb-1">{{ rarp }}</li>
@@ -321,7 +321,7 @@
        
         <div class="flex flex-col items-start justify-start  border-0 border-b border-gray-200 mb-4">    
         <h2 class="mb-10 text-lg font-semibold text-slate-500 dark:text-white">Roles And Resposibilities</h2>
-            <ul class="text-gray-500 list-disc list-outside dark:text-gray-400 pl-5">
+            <ul  class="text-gray-500 list-disc text-start list-inside dark:text-gray-400">
 
                 <span>
                     <li v-for="rolesandres in RoleandResArray" :key="rolesandres">

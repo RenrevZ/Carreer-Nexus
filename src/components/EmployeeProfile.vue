@@ -1,4 +1,5 @@
 <template>
+<div v-if="!isLoading">
   <div class="flex flex-col justify-center items-center h-full w-full">
     <div class="grid grid-col-1 md:grid-rows-3 md:grid-flow-col md:gap-4 my-10 mt-24">
         <div class="row-span-3 flex flex-col justify-start items-center shadow-lg p-10 md:max-w-md mx-auto">
@@ -203,6 +204,12 @@
                             </i>
             </div>
         </div>
+    </div>
+</div>
+</div>
+<div v-else> 
+    <div class="h-screen">
+        <CardLoading />
     </div>
 </div>
 
@@ -621,6 +628,7 @@ export default {
         // EDIT PROFILE MODAL
         
         // INPUTS
+        const showEdit = ref('')
         const UpdateFormInput = reactive({
             firstName:'',
             middleName:'',
@@ -667,6 +675,7 @@ export default {
         const eEducationalAttain = ref('')
         const eAddress = ref('')
         const EditBasicInfo = () => showBasicInfo.value = true
+
         // SUBMIT
         const UpdateBasicInfo = async () => {
             try {
@@ -749,17 +758,13 @@ export default {
             showBasicInfo,
             EditBasicInfo,
             UpdateProfile,
-            eFirstName,
-            eMiddleName,
-            eLastName,
-            ePosition,
-            ebio,
-            eAge,
-            eYearsXp,
-            ePhone,
-            eEmail,
-            eEducationalAttain,
-            eAddress,
+            // ebio,
+            // eAge,
+            // eYearsXp,
+            // ePhone,
+            // eEmail,
+            // eEducationalAttain,
+            // eAddress,
             UpdateBasicInfo,
             dataXp,
             removeSkill,

@@ -76,8 +76,8 @@
                                 >Sign in</button>
                     </span>
                     <small class="text-rose-500">{{ error }}</small>
-                    <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                        Already registered? <a href="#" class="text-blue-700 hover:underline dark:text-blue-500">Login</a>
+                    <div class="flex justify-center text-sm font-medium text-gray-500 dark:text-gray-300">
+                        Already registered? <p @click="LoginEmit" class="cursor-pointer text-blue-700 hover:underline dark:text-blue-500">Login</p>
                     </div>
                 </form>
             </div>
@@ -93,7 +93,7 @@ import SignupUser from '../composables/SignupUser'
 import { useRouter } from 'vue-router'
 export default {
     props: ['showSignupModal'],
-    emits: ['closemodal'],
+    emits: ['closemodal','login'],
     setup(props,{emit}){
         //==== INPUTS
         const username  = ref('')
@@ -112,11 +112,12 @@ export default {
             }
         }
 
-        const CloseEmit = () => {
-            emit('closemodal')
-        }
+       //=== EMITS
+        const CloseEmit = () => emit('closemodal')
+        const LoginEmit = () => emit('login')
 
         const dataObject  = {
+                LoginEmit,
                 CloseEmit,
                 submit,
                 email,

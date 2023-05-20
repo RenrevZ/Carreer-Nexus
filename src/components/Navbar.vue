@@ -10,7 +10,7 @@
             </router-link>
         </div>
 
-        <div class="right hidden md:block" v-if="!currentUser">
+        <div class="right" v-if="!currentUser">
             <button @click="SignupModaltoggle" type="button" class="text-white shadow bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Sign up
             </button>
@@ -26,19 +26,25 @@
                         <i class="fa-solid fa-briefcase text-slate-500 text-1xl"></i>
             </router-link>
 
-            <router-link :to="{ name : 'Home'}"
+            <router-link :to="{ name : 'Message'}"
                          class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200">
                          <i class="fa-solid fa-message text-slate-500 text-1xl"></i>
             </router-link>
 
-            <router-link v-if="isCompany" :to="{name:'postJob'}" 
+            <router-link v-if="isCompany" :to="{name:'postJob'}"
                           class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200"
                           data-tooltip-target="Post a Job">
                 <!-- <i class="fa-solid fa-table-list text-1xl text-slate-500 hover:text-teal-500"></i> -->
                 <i class="fa-regular fa-address-card text-1xl text-slate-500 hover:text-teal-500"></i>
             </router-link>
 
-            <router-link :to="{name:'mylistng'}" 
+            <router-link v-if="isCompany" :to="{name:'Mylisting'}"
+                          class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200">
+                 <i class="fa-solid fa-table-list text-1xl text-slate-500 hover:text-teal-500"></i>
+<!--                <i class="fa-regular fa-address-card text-1xl text-slate-500 hover:text-teal-500"></i>-->
+            </router-link>
+
+            <router-link :to="{name:'Profile'}"
                          class="px-3 cursor-pointer hover:scale-110 delay-150 hover:-translate-y-1 transition ease-in-out duration-200"
                          data-tooltip-target="User Profile">
                   <i class="fa-solid fa-user text-1xl text-slate-500 hover:text-teal-500"></i>

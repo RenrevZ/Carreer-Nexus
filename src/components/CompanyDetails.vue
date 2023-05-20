@@ -161,7 +161,7 @@ export default {
                 filePath: filePath.value
             })
 
-            router.push({name:'mylistng'})
+            router.push({name:'Mylisting'})
         }
 
         const dataObject = {

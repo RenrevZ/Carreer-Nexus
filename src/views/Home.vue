@@ -54,10 +54,10 @@
 
 
   <!--  SIGN IN COMPONENT  -->
-  <SignIn :showSignupModal="showSigupModal" @closemodal="SignupModaltoggle"/>
+  <SignIn :showSignupModal="showSigupModal" @closemodal="SignupModaltoggle" @login="LoginEmit"/>
 
   <!-- LOGIN COMPONENT -->
-  <Login :showLoginModal="showLoginModal" @closemodal="LoginModaltoggle"/>
+  <Login :showLoginModal="showLoginModal" @closemodal="LoginModaltoggle" @signup-emit="SignupEmit"/>
 <!-- == END OF DOCUMENT -->
 </template>
 
@@ -90,12 +90,26 @@ export default {
     loadData()
     window.addEventListener('search-submit', onSearchSubmit);
 
+    // LOGIN
+    const LoginEmit = () => {
+        showLoginModal.value = !showLoginModal.value
+        showSigupModal.value = !showSigupModal.value
+    }
+
+    // SIGNUP
+    const SignupEmit = () => {
+      showLoginModal.value = !showLoginModal.value
+      showSigupModal.value = !showSigupModal.value
+    }
+
     //=== RETURN OBJECT
     const data_object =  {
             SignupModaltoggle,
             showSigupModal,
             LoginModaltoggle,
             showLoginModal,
+            LoginEmit,
+            SignupEmit,
             // currentPageItems,
             // currentPage,
             // totalPages,

@@ -36,18 +36,16 @@
 
           </div>
 
-          <div class="p-6 mb-6 bg-white border border-teal-400 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <div class="w-96 p-10 mb-6 bg-white border border-teal-400 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <div class=" text-slate-800 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <h5 class="text-2xl font-extrabold tracking-tight text-slate-500 dark:text-white">
                     <i class="fa-regular fa-lightbulb"></i> Required Skills
                 </h5> 
             </div>
-            <div class="grid grid-cols-3 gap-2">
-                <span v-for="tags in jobs.tags" :key="tags" class="p-2 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800">
-                                    {{ tags }}
-                </span>
-            </div>
-          
+                <ul class="text-gray-500 list-disc text-start list-inside dark:text-gray-400"
+                    v-for="tags in jobs.tags" :key="tags">
+                    <li class="mb-4">{{ tags }}</li>
+                </ul>
           </div>
         </div>
 
@@ -78,14 +76,25 @@
                         </li>
                     </ul>
                 </div>
-                <div class="right">
+                <div v-if="isUpdating" class="right">
+                    <button class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Applying....
+                    </button>
+                </div>
+                <div v-else-if="isApplied" class="right">
+                    <button class=" text-white bg-gray-600  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        disabled>
+                        Applied
+                    </button>
+                </div>
+                <div v-else class="right">
                     <button class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        @click="apply">
+                            @click="apply">
                         Apply now
                     </button>
                 </div>
-            </div>  
-            
+            </div>
+
         </div>
 
         <div v-if="isLoading">
@@ -157,28 +166,37 @@
 import getSingleData from '../composables/getSingleData'
 import getUser from '@/composables/getUser'
 import Login from '../components/Login'
-import { computed, ref } from 'vue'
+import {  ref } from 'vue'
 import LoadingAnimate from '@/components/LoadingAnimate'
-import queryData from '@/composables/queryData'
-import getDataByuser from '@/composables/getDataByuser'
+import useDocument from "@/composables/useDocument";
 
 
 export default {
     components: { Login,LoadingAnimate },
     props: ['id'],
     setup(props,{emit}){
+
         // COMPOSABLES 
-        const { error, jobs,collectionData,isLoading} = getSingleData(props.id,'Jobs')
-        // const {  data, loadData } = queryData('Company')
+        const { error, jobs,collectionData,isLoading,isUserApplied,userApplied } = getSingleData(props.id,'Jobs')
         const { currentUser } = getUser()
         let showLoginModal = ref(false)
         let showLoginfirst = ref(false)
-        const companyId = jobs.value.length > 0 ? jobs.value[0].Company : undefined
-        // loadData()
 
-        const apply = () => {
+
+        // APPLY
+        const isUpdating = ref(false)
+        const isApplied  = ref(false)
+        const apply = async () => {
             if(currentUser.value != null){
-                console.log('applied')
+                const {updateDoc} = useDocument('Jobs',props.id)
+
+                if(isUserApplied.value){
+                    isApplied.value = true
+                }else{
+                    isUpdating.value = true
+                    await updateDoc({appliedUser:userApplied.value})
+                }
+                isUpdating.value = false
             }else{
                 showLoginModal.value = true
                 showLoginfirst.value = true
@@ -200,7 +218,9 @@ export default {
             showLoginfirst,
             isLoading,
             closeModal,
-            company : collectionData
+            company : collectionData,
+            isUpdating,
+            isApplied
         }
         return dataObject
     }   

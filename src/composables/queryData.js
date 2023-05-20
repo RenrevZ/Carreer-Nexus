@@ -1,4 +1,4 @@
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import { projectFirestore } from '../firebase/config'
 import getUser from '@/composables/getUser'
 
