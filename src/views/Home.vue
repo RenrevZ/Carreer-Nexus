@@ -13,6 +13,9 @@
 
   <!-- ==== JOBS DATA === -->
   <div v-if="!isLoading">
+    <span v-if="error!= ''">
+      <small class="text-rose-700">{{error}}</small>
+    </span>
     <div v-if="jobs != ''" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
       <Jobs :jobs="jobs" :company="collectionData" />
     </div>
@@ -90,6 +93,7 @@ export default {
     loadData()
     window.addEventListener('search-submit', onSearchSubmit);
 
+
     // LOGIN
     const LoginEmit = () => {
         showLoginModal.value = !showLoginModal.value
@@ -118,7 +122,8 @@ export default {
             jobs,
             onSearchSubmit,
             isLoading,
-            collectionData
+            collectionData,
+            error
         }
       
     return data_object

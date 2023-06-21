@@ -20,10 +20,21 @@ const getData =  () => {
         }
         
         if (response.docs.length > 0) { // check if any documents were returned
-            const user = response.docs[0].data().user; // get the user property from the first document
-            const companyCollection = await projectFirestore.collection('Company')
-                                    .where('user', '==', user)
-                                    .get();
+            // const user = response.docs[0].data().user; // get the user property from the first document
+            const user = response.docs.map(doc => {
+                return doc.data().user
+            }); // get the user property from the first document
+
+
+            let companyCollection = ref([])
+            for(let i = 0; i < user.length; i++){
+                companyCollection.value.push(await projectFirestore.collection('Company')
+                    .where('user', '==', user[i])
+                    .get())
+            }
+
+            console.log('companyCollection:',companyCollection)
+
             collectionData.value  = companyCollection.docs.map((doc) => {
               return { ...doc.data(), id: doc.id };
             });
