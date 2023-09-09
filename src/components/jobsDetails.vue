@@ -166,7 +166,7 @@
 import getSingleData from '../composables/getSingleData'
 import getUser from '@/composables/getUser'
 import Login from '../components/Login'
-import {  ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import LoadingAnimate from '@/components/LoadingAnimate'
 import useDocument from "@/composables/useDocument";
 
@@ -181,21 +181,24 @@ export default {
         const { currentUser } = getUser()
         let showLoginModal = ref(false)
         let showLoginfirst = ref(false)
-
+        
 
         // APPLY
         const isUpdating = ref(false)
         const isApplied  = ref(false)
+   
         const apply = async () => {
             if(currentUser.value != null){
-                const {updateDoc} = useDocument('Jobs',props.id)
+                const { updateDoc } = useDocument('Jobs',props.id)
 
                 if(isUserApplied.value){
                     isApplied.value = true
                 }else{
                     isUpdating.value = true
-                    await updateDoc({appliedUser:userApplied.value})
+                    await updateDoc({ appliedUser: currentUser.value.uid})
+                    location.reload()
                 }
+
                 isUpdating.value = false
             }else{
                 showLoginModal.value = true
@@ -207,9 +210,8 @@ export default {
            
         }
         
-        
         const closeModal = () => showLoginModal.value = false
-        
+       
         const dataObject = {
             error,
             jobs,

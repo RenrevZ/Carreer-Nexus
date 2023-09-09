@@ -11,33 +11,36 @@ const getData =  () => {
         isLoading.value = true
         const response = await projectFirestore.collection('Jobs').get()
         
-        
+        console.log('res:',response.docs)
         if(search){
             jobs.value = response.docs.map(doc => ({...doc.data(),id : doc.id}))
                          .filter(job => job.position.toLowerCase().includes(search.toLowerCase()))
           }else{
-                jobs.value = response.docs.map(doc => ({...doc.data(),id : doc.id}))
+            jobs.value = response.docs.map(doc => ({...doc.data(),id : doc.id}))
         }
         
-        if (response.docs.length > 0) { // check if any documents were returned
-            // const user = response.docs[0].data().user; // get the user property from the first document
-            const user = response.docs.map(doc => {
-                return doc.data().user
-            }); // get the user property from the first document
+        if (response.docs.length > 0) {
+            const users = response.docs.map((doc) => doc.data().user);
+            const uniqueUser = users.filter((value, index, array) => array.indexOf(value) === index);
 
-
-            let companyCollection = ref([])
-            for(let i = 0; i < user.length; i++){
-                companyCollection.value.push(await projectFirestore.collection('Company')
-                    .where('user', '==', user[i])
-                    .get())
-            }
-
-            console.log('companyCollection:',companyCollection)
-
-            collectionData.value  = companyCollection.docs.map((doc) => {
-              return { ...doc.data(), id: doc.id };
-            });
+            // Use Promise.all to wait for all queries to complete
+            let companyCollection = await Promise.all(
+                uniqueUser.map(async (user) => {
+                    const query= await projectFirestore
+                    .collection('Company')
+                    .where('user', '==', user)
+                    .get()
+                    
+                    // Return the data from the querySnapshot
+                    return query.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+                })
+            );
+          
+            // Flatten the array of arrays into a single array
+            companyCollection = companyCollection.flat();
+          
+            console.log('sdasdsadasd', companyCollection);
+            collectionData.value = companyCollection;
         }
     }
     catch(err){
